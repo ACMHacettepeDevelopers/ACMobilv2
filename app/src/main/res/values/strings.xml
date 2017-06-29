@@ -4,7 +4,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Ayarlar</string>
+    <string name="action_info">Hakkında</string>
     <string name="title_activity_yemek_listesi">YemekListesi</string>
 
     <!-- TODO: Remove or change this placeholder text -->
