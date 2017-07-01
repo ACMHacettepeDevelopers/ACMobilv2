@@ -22,6 +22,10 @@
         <activity
             android:name=".YemekListesi"
             android:label="@string/title_activity_yemek_listesi"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Info"
+            android:label="@string/title_activity_info"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
