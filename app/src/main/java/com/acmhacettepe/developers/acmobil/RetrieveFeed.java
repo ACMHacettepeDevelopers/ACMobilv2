@@ -1,6 +1,6 @@
 package com.acmhacettepe.developers.acmobil;
-
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -13,7 +13,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 /**
- * Created by Gokberk on 7/4/2017.
+ * Created by Gokberk on 6/30/2017.
  */
 
 public class RetrieveFeed extends AsyncTask {
@@ -27,7 +27,7 @@ public class RetrieveFeed extends AsyncTask {
 
 
         try {
-            url = new URL("http://feeds.bbci.co.uk/news/rss.xml?edition=uk");
+            url = new URL("http://www.sksdb.hacettepe.edu.tr/YemekListesi.xml");
 
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             factory.setNamespaceAware(false);
@@ -49,20 +49,23 @@ public class RetrieveFeed extends AsyncTask {
             // Returns the type of current event: START_TAG, END_TAG, etc..
             int eventType = xpp.getEventType();
             while (eventType != XmlPullParser.END_DOCUMENT) {
+
                 if (eventType == XmlPullParser.START_TAG) {
 
-                    //TODO: "item", "title" ve "link" stringlerini uygun olanlara degistir ve ekleme/cıkarma yap.
-
-                    if (xpp.getName().equalsIgnoreCase("item")) {
+                    if (xpp.getName().equalsIgnoreCase("gun")) {
                         insideItem = true;
-                    } else if (xpp.getName().equalsIgnoreCase("title")) {
+                    } else if (xpp.getName().equalsIgnoreCase("tarih")) {
                         if (insideItem)
-                            headlines.add(xpp.nextText()); //extract the headline
-                    } else if (xpp.getName().equalsIgnoreCase("link")) {
+                            links.add(xpp.nextText()); //extract the headline
+                    } else if (xpp.getName().equalsIgnoreCase("yemek")) {
                         if (insideItem)
                             links.add(xpp.nextText()); //extract the link of article
                     }
-                } else if (eventType == XmlPullParser.END_TAG && xpp.getName().equalsIgnoreCase("item")) {
+                    else if (xpp.getName().equalsIgnoreCase("kalori")) {
+                        if (insideItem)
+                            links.add(xpp.nextText()); //extract the link of article
+                    }
+                } else if (eventType == XmlPullParser.END_TAG && xpp.getName().equalsIgnoreCase("gun")) {
                     insideItem = false;
                 }
 
@@ -91,6 +94,6 @@ public class RetrieveFeed extends AsyncTask {
 
     public ArrayList<String> heads()
     {
-        return headlines;
+        return links;
     }
 }
