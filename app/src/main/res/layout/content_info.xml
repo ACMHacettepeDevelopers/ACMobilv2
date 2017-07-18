@@ -8,4 +8,9 @@
     tools:context="com.acmhacettepe.developers.acmobil.Info"
     tools:showIn="@layout/activity_info">
 
+    <ListView
+        android:id="@+id/info_list"
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        />
 </android.support.constraint.ConstraintLayout>
