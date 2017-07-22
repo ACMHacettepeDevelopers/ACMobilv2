@@ -20,7 +20,7 @@ public class RetrieveFeed extends AsyncTask {
 
     URL url;
     ArrayList<String> headlines = new ArrayList();
-    ArrayList<String> links = new ArrayList();
+
     @Override
     protected Object doInBackground(Object[] objects) {
         // Initializing instance variables
@@ -36,14 +36,7 @@ public class RetrieveFeed extends AsyncTask {
             // We will get the XML from an input stream
             xpp.setInput(getInputStream(url), "UTF_8");
 
-        /* We will parse the XML content looking for the "<title>" tag which appears inside the "<item>" tag.
-         * However, we should take in consideration that the rss feed name also is enclosed in a "<title>" tag.
-         * As we know, every feed begins with these lines: "<channel><title>Feed_Name</title>...."
-         * so we should skip the "<title>" tag which is a child of "<channel>" tag,
-         * and take in consideration only "<title>" tag which is a child of "<item>"
-         *
-         * In order to achieve this, we will make use of a boolean variable.
-         */
+
             boolean insideItem = false;
 
             // Returns the type of current event: START_TAG, END_TAG, etc..
@@ -56,14 +49,14 @@ public class RetrieveFeed extends AsyncTask {
                         insideItem = true;
                     } else if (xpp.getName().equalsIgnoreCase("tarih")) {
                         if (insideItem)
-                            links.add(xpp.nextText()); //extract the headline
+                            headlines.add(xpp.nextText()); //extract the headline
                     } else if (xpp.getName().equalsIgnoreCase("yemek")) {
                         if (insideItem)
-                            links.add(xpp.nextText()); //extract the link of article
+                            headlines.add(xpp.nextText()); //extract the link of article
                     }
                     else if (xpp.getName().equalsIgnoreCase("kalori")) {
                         if (insideItem)
-                            links.add(xpp.nextText()); //extract the link of article
+                            headlines.add(xpp.nextText()); //extract the link of article
                     }
                 } else if (eventType == XmlPullParser.END_TAG && xpp.getName().equalsIgnoreCase("gun")) {
                     insideItem = false;
@@ -94,6 +87,6 @@ public class RetrieveFeed extends AsyncTask {
 
     public ArrayList<String> heads()
     {
-        return links;
+        return headlines;
     }
 }
