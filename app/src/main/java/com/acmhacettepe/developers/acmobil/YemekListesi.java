@@ -1,6 +1,8 @@
 package com.acmhacettepe.developers.acmobil;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -50,7 +53,10 @@ public class YemekListesi extends Fragment {
 
         yemekListesi.setAdapter(adapter);
 
-        new GetData().execute();
+        if (checkConnection(getContext()) == true)
+            new GetData().execute();
+        else
+            Toast.makeText(getActivity(), "Please check your internet connection and try again.", Toast.LENGTH_LONG).show();
 
         return view;
     }
@@ -127,6 +133,12 @@ public class YemekListesi extends Fragment {
         protected void onProgressUpdate(String... values) {
             adapter.add(values[0]);
         }
+    }
+
+    public boolean checkConnection (Context ctx){
+        ConnectivityManager conMgr = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo i = conMgr.getActiveNetworkInfo();
+        return i != null && i.isConnected() && i.isAvailable();
     }
 
 }
