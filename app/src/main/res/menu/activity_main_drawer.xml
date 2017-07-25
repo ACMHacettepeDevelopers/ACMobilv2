@@ -11,9 +11,9 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="Yemek Listesi" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_giybet"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="Gıybet" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
