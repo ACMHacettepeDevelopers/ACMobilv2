@@ -54,7 +54,7 @@ public class YemekListesi extends Fragment {
         yemekListesi.setAdapter(adapter);
 
         if (checkConnection(getContext()) == true)
-            new GetData().execute();
+            new GetData().execute(); // Executing asynctask if there is network connection.
         else
             Toast.makeText(getActivity(), "Please check your internet connection and try again.", Toast.LENGTH_LONG).show();
 
@@ -75,7 +75,7 @@ public class YemekListesi extends Fragment {
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Void doInBackground(Void... params) { // Parses the xml file and publises the progress for each item.
             try {
                 url = new URL("http://www.sksdb.hacettepe.edu.tr/YemekListesi.xml");
 
@@ -125,17 +125,17 @@ public class YemekListesi extends Fragment {
         }
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute() { // First method that is called after execute(). Gets and passes the ArrayAdapter.
             adapter = (ArrayAdapter<String>) yemekListesi.getAdapter();
         }
 
         @Override
-        protected void onProgressUpdate(String... values) {
+        protected void onProgressUpdate(String... values) { // This method is called in the UI thread when publishProgress() is called.
             adapter.add(values[0]);
         }
     }
 
-    public boolean checkConnection (Context ctx){
+    public boolean checkConnection (Context ctx){ // Method for if there is network connection.
         ConnectivityManager conMgr = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo i = conMgr.getActiveNetworkInfo();
         return i != null && i.isConnected() && i.isAvailable();
