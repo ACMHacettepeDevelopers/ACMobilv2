@@ -130,7 +130,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.log_out) {
-            System.out.println("sign out");
             auth.signOut();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
