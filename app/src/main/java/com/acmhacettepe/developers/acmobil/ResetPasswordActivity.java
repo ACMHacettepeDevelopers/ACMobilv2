@@ -1,5 +1,7 @@
 package com.acmhacettepe.developers.acmobil;
 
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,11 +23,28 @@ public class ResetPasswordActivity extends AppCompatActivity {
     private Button btnReset, btnBack;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
+    private VideoView mVideoView3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
+
+
+        //Start of background video
+        mVideoView3 = (VideoView) findViewById(R.id.videoResetPw);
+
+        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.bgvideo);
+        mVideoView3.setVideoURI(uri);
+        mVideoView3.start();
+
+        mVideoView3.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setLooping(true);
+            }
+        });
+        //End of background video
 
         inputEmail = (EditText) findViewById(R.id.email);
         btnReset = (Button) findViewById(R.id.btn_reset_password);
@@ -67,6 +87,13 @@ public class ResetPasswordActivity extends AppCompatActivity {
                         });
             }
         });
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        // This line needed for video playback bug.
+        mVideoView3.start();
     }
 
 }

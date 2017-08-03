@@ -57,5 +57,8 @@
     <string name="lbl_forgot_password">Şifremi unuttum</string>
     <string name="forgot_password_msg">Şifrenizi değiştirmek için mail adresinizi giriniz.</string>
     <string name="title_activity_signup">Üye Ol</string>
+    <string name="hint_ogrNum">Öğrenci Numarası</string>
+    <string name="hint_username">Kullanıcı Adı</string>
+    <string name="hint_uyeNum">Üye Numarası</string>
     <!-- End of Login -->
 </resources>

@@ -43,10 +43,10 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
-        // set the view now
+        //Start of background video
         setContentView(R.layout.activity_login);
 
-        mVideoView = (VideoView) findViewById(R.id.videoView);
+        mVideoView = (VideoView) findViewById(R.id.videoLogin);
 
         Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.bgvideo);
         mVideoView.setVideoURI(uri);
@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                 mp.setLooping(true);
             }
         });
-
+        //End of background video
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -130,5 +130,12 @@ public class LoginActivity extends AppCompatActivity {
                         });
             }
         });
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        // This line needed for video playback bug.
+        mVideoView.start();
     }
 }
