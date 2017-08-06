@@ -61,4 +61,7 @@
     <string name="hint_username">Kullanıcı Adı</string>
     <string name="hint_uyeNum">Üye Numarası</string>
     <!-- End of Login -->
+
+    <!-- Signup -->
+    <string name="ogr_num_not_in_db">Lütfen geçerli bir öğrenci numarası giriniz</string>
 </resources>

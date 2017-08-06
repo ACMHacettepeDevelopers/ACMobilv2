@@ -37,7 +37,9 @@
         <activity
             android:name=".SignupActivity"
             android:label="@string/title_activity_signup"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AdminPanel" />
+        <activity android:name=".AddUser"></activity>
     </application>
 
 </manifest>

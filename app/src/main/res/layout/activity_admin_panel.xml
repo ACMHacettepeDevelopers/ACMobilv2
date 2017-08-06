@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.acmhacettepe.developers.acmobil.AdminPanel">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="120sp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/uye_ekle_button"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="Üye Ekle" />
+
+        <Button
+            android:id="@+id/home_screen"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="Ana Ekrana Git" />
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>
