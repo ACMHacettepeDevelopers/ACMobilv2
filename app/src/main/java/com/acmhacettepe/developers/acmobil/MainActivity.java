@@ -1,15 +1,10 @@
 package com.acmhacettepe.developers.acmobil;
 
-import android.app.Activity;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -30,13 +25,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener , Giybet.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener , Chats.OnFragmentInteractionListener {
 
 
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authListener;
     private DatabaseReference mDatabase;
-    private Button adminButton;
+    public static Button adminButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,7 +177,7 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, yemekListesi).commit();
         } else if (id == R.id.nav_giybet) {
-            Giybet giybet = new Giybet();
+            Chats giybet = new Chats();
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, giybet).commit();
