@@ -125,6 +125,7 @@ public class SignupActivity extends AppCompatActivity {
 
                                             mDatabase.child("AddedUsers/").child(ogrNum).child("isRegistered").setValue(true);
                                             mDatabase.child("AddedUsers/").child(ogrNum).child("userName").setValue(username);
+                                            mDatabase.child("RegisteredUsers").child(auth.getCurrentUser().getUid()).setValue(username);
                                             // If sign in fails, display a message to the user. If sign in succeeds
                                             // the auth state listener will be notified and logic to handle the
                                             // signed in user can be handled in the listener.
