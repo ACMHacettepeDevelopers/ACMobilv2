@@ -60,6 +60,8 @@
     <string name="hint_ogrNum">Öğrenci Numarası</string>
     <string name="hint_username">Kullanıcı Adı</string>
     <string name="hint_uyeNum">Üye Numarası</string>
+    <string name="push_yemekList">Yemek Listesi</string>
+    <string name="push_map">Kampüs Haritası</string>
     <!-- End of Login -->
 
     <!-- Signup -->

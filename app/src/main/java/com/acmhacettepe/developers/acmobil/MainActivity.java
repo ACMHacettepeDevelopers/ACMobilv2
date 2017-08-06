@@ -55,7 +55,11 @@ public class MainActivity extends AppCompatActivity
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
 
-        final String mUser = auth.getCurrentUser().getUid();
+
+
+
+
+
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -94,7 +98,14 @@ public class MainActivity extends AppCompatActivity
         admin.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                if(snapshot.child(mUser).exists()){
+
+                String mUser = null;
+
+                final FirebaseUser User = auth.getCurrentUser();
+
+                if(User!=null){ mUser = User.getUid(); }
+
+                if(mUser!=null && snapshot.child(mUser).exists()){
                     adminButton.setVisibility(View.VISIBLE);
                 }
             }

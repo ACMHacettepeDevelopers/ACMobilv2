@@ -6,6 +6,7 @@
         <item name="colorPrimary">#9329CB</item>
         <item name="colorPrimaryDark">#9329CB</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorHint">#ffffff</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
