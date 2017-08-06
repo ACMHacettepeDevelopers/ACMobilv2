@@ -5,9 +5,14 @@ package com.acmhacettepe.developers.acmobil;
  */
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SyncStatusObserver;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,8 +22,17 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 public class ChatAdapter extends BaseAdapter {
+
+    private DatabaseReference root;
+
 
     private static LayoutInflater inflater = null;
     ArrayList<ChatMessage> chatMessageList;
@@ -27,6 +41,44 @@ public class ChatAdapter extends BaseAdapter {
         chatMessageList = list;
         inflater = (LayoutInflater) activity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        root = FirebaseDatabase.getInstance().getReference().child("Giybet");
+        root.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                DataSnapshot i = dataSnapshot.getChildren().iterator().next();
+                String body = ((HashMap)(i).getValue()).get("body").toString();
+                String senderName = ((HashMap)(i).getValue()).get("senderName").toString();
+                String msgid = ((HashMap)(i).getValue()).get("msgid").toString();
+                String userId = ((HashMap)(i).getValue()).get("userId").toString();
+                ChatMessage msg1 = new ChatMessage(senderName,body,msgid,userId);
+                msg1.Date = ((HashMap)(i).getValue()).get("Date").toString();
+                msg1.Time = ((HashMap)(i).getValue()).get("Time").toString();
+                System.out.println(body);
+                chatMessageList.add(msg1);
+                notifyDataSetChanged();
+                System.out.println(chatMessageList);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -60,7 +112,7 @@ public class ChatAdapter extends BaseAdapter {
                 .findViewById(R.id.bubble_layout_parent);
 
         // if message is mine then align to right
-        if (message.isMine) {
+        if (message.IsMe()) {
             layout.setBackgroundResource(R.drawable.bubble2);
             parent_layout.setGravity(Gravity.RIGHT);
         }
@@ -74,6 +126,11 @@ public class ChatAdapter extends BaseAdapter {
     }
 
     public void add(ChatMessage object) {
-        chatMessageList.add(object);
+        DatabaseReference messageRoot = root.child(object.msgid);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("message", object);
+        messageRoot.updateChildren(map);
     }
+
+
 }

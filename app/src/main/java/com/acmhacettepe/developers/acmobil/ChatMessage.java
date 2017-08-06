@@ -4,28 +4,41 @@ package com.acmhacettepe.developers.acmobil;
  * Created by Oguz on 8/6/2017.
  */
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.Random;
 
 public class ChatMessage {
 
-    public String body, sender, receiver, senderName;
+    public String body, senderName;
     public String Date, Time;
     public String msgid;
-    public boolean isMine;// Did I send the message.
+    public String userId;
+    private FirebaseAuth auth;
 
-    public ChatMessage(String Sender, String Receiver, String messageString,
-                       String ID, boolean isMINE) {
+
+    public ChatMessage(String Sender, String messageString, String ID) {
+        auth = FirebaseAuth.getInstance();
         body = messageString;
-        isMine = isMINE;
-        sender = Sender;
+        senderName = Sender;
         msgid = ID;
-        receiver = Receiver;
-        senderName = sender;
+        userId = auth.getCurrentUser().getUid();
+    }
+
+    public ChatMessage(String Sender, String messageString, String ID, String uid) {
+        body = messageString;
+        senderName = Sender;
+        msgid = ID;
+        userId = uid;
     }
 
     public void setMsgID() {
+        msgid += "-" + String.format("%02d", new Random().nextInt(100000));
+        System.out.println(msgid);
+    }
 
-        msgid += "-" + String.format("%02d", new Random().nextInt(100));
-        ;
+    public boolean IsMe(){
+        return true;
+        //return userId.equals(auth.getCurrentUser().getUid());
     }
 }
