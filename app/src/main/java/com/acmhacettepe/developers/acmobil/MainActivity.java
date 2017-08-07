@@ -25,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener , Chats.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener , Chats.OnFragmentInteractionListener, MapFragment.OnFragmentInteractionListener {
 
 
     private FirebaseAuth auth;
@@ -194,6 +194,10 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.frame_container, giybet).commit();
 
         } else if (id == R.id.nav_manage) {
+            MapFragment mapFragment = new MapFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_container, mapFragment).commit();
 
         } else if (id == R.id.nav_share) {
 

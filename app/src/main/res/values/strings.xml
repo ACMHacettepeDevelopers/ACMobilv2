@@ -66,4 +66,15 @@
 
     <!-- Signup -->
     <string name="ogr_num_not_in_db">Lütfen geçerli bir öğrenci numarası giriniz</string>
+
+    <string-array name="mekanlar_array">
+        <item>Kız Öğrenci Yurdu</item>
+        <item>Erkek Öğrenci Yurdu</item>
+        <item>Parlar Öğrenci Yurdu</item>
+        <item>Atatepe Öğrenci Yurdu</item>
+        <item>City</item>
+        <item>Fizik Mühendisliği</item>
+        <item>Elektrik Elektronik Mühendisliği</item>
+        <item>Kütüphane</item>
+    </string-array>
 </resources>

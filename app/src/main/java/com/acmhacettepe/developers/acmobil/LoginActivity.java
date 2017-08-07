@@ -25,12 +25,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Map;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText inputEmail, inputPassword;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
-    private Button btnSignup, btnLogin, btnReset;
+    private Button btnSignup, btnLogin, btnReset, btnPushYemekList, btnPushMap;
     private VideoView mVideoView;
     private DatabaseReference mDatabase;
 
@@ -85,10 +87,30 @@ public class LoginActivity extends AppCompatActivity {
         btnSignup = (Button) findViewById(R.id.btn_signup);
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnReset = (Button) findViewById(R.id.btn_reset_password);
+        btnPushYemekList = (Button) findViewById(R.id.push_yemekList);
+        btnPushMap = (Button) findViewById(R.id.push_map);
+
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
+        //Push Yemek List
+        btnPushYemekList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, YemekActivity.class));
+            }
+        });
+
+        //Push Map
+        btnPushMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, MapActivity.class));
+            }
+        });
+
+        //Signup Button
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //Reset Pw Button
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //Login Button
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
