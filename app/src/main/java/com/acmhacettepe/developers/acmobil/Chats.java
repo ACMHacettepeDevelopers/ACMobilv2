@@ -60,8 +60,8 @@ public class Chats extends Fragment implements OnClickListener {
         String message = msg_edittext.getEditableText().toString();
         if (!message.equalsIgnoreCase("")) {
             final ChatMessage chatMessage = new ChatMessage(user,
-                    message, "" + random.nextInt(100000000));
-            chatMessage.setMsgID();
+                    message, "" + (ChatAdapter.lastId + 1));
+            //chatMessage.setMsgID();
             chatMessage.body = message;
             chatMessage.Date = CommonMethods.getCurrentDate();
             chatMessage.Time = CommonMethods.getCurrentTime();
