@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -31,7 +32,7 @@ import static com.acmhacettepe.developers.acmobil.MainActivity.*;
  * Use the {@link MapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapFragment extends Fragment implements OnMapReadyCallback{
+public class MapFragment extends Fragment implements OnMapReadyCallback, AdapterView.OnItemSelectedListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -113,6 +114,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
 
 
     }
@@ -151,13 +153,58 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         mGoogleMap = googleMap;
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        MarkerOptions Parlar = new MarkerOptions().position(new LatLng(39.871564, 32.730348)).title("Parlar Öğrenci Evi").snippet("Açık Büfe");
-        googleMap.addMarker(Parlar);
-        MarkerOptions kYurdu = new MarkerOptions().position(new LatLng(39.869935, 32.731901)).title("Parlar Öğrenci Evi").snippet("Açık Büfe");
-        googleMap.addMarker(kYurdu);
+
+
 
         CameraPosition Camera = CameraPosition.builder().target(new LatLng(39.870631, 32.733120)).zoom(16).bearing(0).tilt(45).build();
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Camera));
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        if(position==0){ //Kız Öğrenci Yurdu
+            MarkerOptions kYurdu = new MarkerOptions().position(new LatLng(39.869935, 32.731901)).title("Kız Öğrenci Yurdu").snippet("");
+            mGoogleMap.clear();
+            mGoogleMap.addMarker(kYurdu);
+
+        }
+        else if (position==1){ //Erkek Öğrenci Yurdu
+            MarkerOptions eYurdu = new MarkerOptions().position(new LatLng(39.869536, 32.731768)).title("Erkek Öğrenci Yurdu").snippet("");
+            mGoogleMap.clear();
+            mGoogleMap.addMarker(eYurdu);
+        }
+        else if (position==2){ //Parlar
+            MarkerOptions Parlar = new MarkerOptions().position(new LatLng(39.871564, 32.730348)).title("Parlar Öğrenci Evi").snippet("Açık Büfe");
+            mGoogleMap.clear();
+            mGoogleMap.addMarker(Parlar);
+        }
+        else if (position==3){ //Atatepe Öğrenci Yurdu
+            MarkerOptions Atatepe = new MarkerOptions().position(new LatLng(39.867873, 32.731907)).title("Atatepe Öğrenci Yurdu").snippet("");
+            mGoogleMap.clear();
+            mGoogleMap.addMarker(Atatepe);
+        }
+        else if (position==4){ //City
+            MarkerOptions City = new MarkerOptions().position(new LatLng(39.869907, 32.733832)).title("City").snippet("");
+            mGoogleMap.clear();
+            mGoogleMap.addMarker(City);
+        }
+        else if (position==5){ //Fizik Müh
+            MarkerOptions Fizik = new MarkerOptions().position(new LatLng(39.869644, 32.734053)).title("Fizik Mühendisliği").snippet("");
+            mGoogleMap.clear();
+            mGoogleMap.addMarker(Fizik);
+        }
+        else if (position==6){ //Elektrik
+            MarkerOptions Elektronik = new MarkerOptions().position(new LatLng(39.869977, 32.734572)).title("Elektrik Elektronik Mühendisliği").snippet("");
+            mGoogleMap.clear();
+            mGoogleMap.addMarker(Elektronik);
+        }
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 
