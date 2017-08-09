@@ -41,7 +41,7 @@ public class ChatAdapter extends BaseAdapter {
         chatMessageList = list;
         inflater = (LayoutInflater) activity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        root = FirebaseDatabase.getInstance().getReference().child("Giybet");
+        root = FirebaseDatabase.getInstance().getReference().child("Giybet").child("Messages");
         root.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -54,10 +54,8 @@ public class ChatAdapter extends BaseAdapter {
                 ChatMessage msg1 = new ChatMessage(senderName,body,msgid,userId);
                 msg1.Date = ((HashMap)(i).getValue()).get("Date").toString();
                 msg1.Time = ((HashMap)(i).getValue()).get("Time").toString();
-                System.out.println(body);
                 chatMessageList.add(msg1);
                 notifyDataSetChanged();
-                System.out.println(chatMessageList);
             }
 
             @Override

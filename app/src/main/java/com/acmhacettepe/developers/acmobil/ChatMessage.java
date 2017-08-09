@@ -38,7 +38,6 @@ public class ChatMessage {
     }
 
     public boolean IsMe(){
-        return true;
-        //return userId.equals(auth.getCurrentUser().getUid());
+        return senderName.equals(Chats.nickname);
     }
 }
