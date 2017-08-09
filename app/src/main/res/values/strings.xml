@@ -72,9 +72,51 @@
         <item>Erkek Öğrenci Yurdu</item>
         <item>Parlar Öğrenci Yurdu</item>
         <item>Atatepe Öğrenci Yurdu</item>
+        <item>Öğrenci Evleri</item>
+        <item>Spor Bilimleri</item>
+        <item>Ego Durakları</item>
+        <item>Karma Yurt</item>
         <item>City</item>
-        <item>Fizik Mühendisliği</item>
+        <item>Şok</item>
+        <item>Beytepe Alışveriş Merkezi(Bam)</item>
+        <item>Yabancı Diller Yüksek Okulu(YDYO)</item>
+        <item>Yıldız Amfi</item>
+        <item>Mehmet Akif Ersoy K-Salonu(MAE)</item>
+        <item>Beytepe Kampüsü Rektörlük Binası</item>
+        <item>Beytepe Gün Hastanesi</item>
+        <item>Beytepe Açık Hava Tiyatrosu</item>
+        <item>Edebiyat Fakültesi</item>
+        <item>Hukuk Fakültesi</item>
+        <item>Güzel Sanatlar Fakültesi</item>
+        <item>İktisadi ve İdari Bilimler Fakültesi</item>
+        <item>Eğitim Bilimleri Fakültesi</item>
+        <item>Fizik-Nükleer Enerji Mühendisliği</item>
         <item>Elektrik Elektronik Mühendisliği</item>
+        <item>Bilgisayar Mühendisliği</item>
+        <item>Çevre Mühendisliği</item>
+        <item>Jeoloji Mühendisliği</item>
+        <item>Kimya Mühendisliği</item>
+        <item>Makine Mühendisliği</item>
+        <item>Otomotiv Mühendisliği</item>
+        <item>Gıda Mühendisliği</item>
+        <item>Bilgi İşlem</item>
         <item>Kütüphane</item>
+        <item>Atmler</item>
+        <item>Ptt</item>
+        <item>Matematik Bölümü</item>
+        <item>Biyoloji Bölümü</item>
+        <item>Geomatik Mühendislik Bölümü</item>
+        <item>Yeşil Vadi</item>
+        <item>Halı Saha</item>
+        <item>Güneş Saatleri Parkı</item>
+        <item>Beytepe Stadı</item>
+        <item>Beytepe Anaokulu</item>
+        <item>Hacettepe Teknokent</item>
+        <item>Kongre Merkezi</item>
+        <item>Olimpik Yüzme Havuzu</item>
+        <item>Yemekhaneler</item>
+        <item>Nizamiye</item>
+        <item>Yapı Kredi Bankası</item>
+        <item>Vakıfbank</item>
     </string-array>
 </resources>

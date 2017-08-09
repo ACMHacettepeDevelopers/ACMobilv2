@@ -168,37 +168,51 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Adapter
             MarkerOptions kYurdu = new MarkerOptions().position(new LatLng(39.869935, 32.731901)).title("Kız Öğrenci Yurdu").snippet("");
             mGoogleMap.clear();
             mGoogleMap.addMarker(kYurdu);
+            CameraPosition Camera = CameraPosition.builder().target(new LatLng(39.869935, 32.731901)).zoom(16).bearing(0).tilt(45).build();
+            mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Camera));
 
         }
         else if (position==1){ //Erkek Öğrenci Yurdu
             MarkerOptions eYurdu = new MarkerOptions().position(new LatLng(39.869536, 32.731768)).title("Erkek Öğrenci Yurdu").snippet("");
             mGoogleMap.clear();
             mGoogleMap.addMarker(eYurdu);
+            CameraPosition Camera = CameraPosition.builder().target(new LatLng(39.869536, 32.731768)).zoom(16).bearing(0).tilt(45).build();
+            mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Camera));
         }
         else if (position==2){ //Parlar
             MarkerOptions Parlar = new MarkerOptions().position(new LatLng(39.871564, 32.730348)).title("Parlar Öğrenci Evi").snippet("Açık Büfe");
             mGoogleMap.clear();
             mGoogleMap.addMarker(Parlar);
+            CameraPosition Camera = CameraPosition.builder().target(new LatLng(39.871564, 32.730348)).zoom(16).bearing(0).tilt(45).build();
+            mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Camera));
         }
         else if (position==3){ //Atatepe Öğrenci Yurdu
             MarkerOptions Atatepe = new MarkerOptions().position(new LatLng(39.867873, 32.731907)).title("Atatepe Öğrenci Yurdu").snippet("");
             mGoogleMap.clear();
             mGoogleMap.addMarker(Atatepe);
+            CameraPosition Camera = CameraPosition.builder().target(new LatLng(39.867873, 32.731907)).zoom(16).bearing(0).tilt(45).build();
+            mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Camera));
         }
         else if (position==4){ //City
             MarkerOptions City = new MarkerOptions().position(new LatLng(39.869907, 32.733832)).title("City").snippet("");
             mGoogleMap.clear();
             mGoogleMap.addMarker(City);
+            CameraPosition Camera = CameraPosition.builder().target(new LatLng(39.869907, 32.733832)).zoom(16).bearing(0).tilt(45).build();
+            mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Camera));
         }
         else if (position==5){ //Fizik Müh
             MarkerOptions Fizik = new MarkerOptions().position(new LatLng(39.869644, 32.734053)).title("Fizik Mühendisliği").snippet("");
             mGoogleMap.clear();
             mGoogleMap.addMarker(Fizik);
+            CameraPosition Camera = CameraPosition.builder().target(new LatLng(39.869644, 32.734053)).zoom(16).bearing(0).tilt(45).build();
+            mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Camera));
         }
         else if (position==6){ //Elektrik
             MarkerOptions Elektronik = new MarkerOptions().position(new LatLng(39.869977, 32.734572)).title("Elektrik Elektronik Mühendisliği").snippet("");
             mGoogleMap.clear();
             mGoogleMap.addMarker(Elektronik);
+            CameraPosition Camera = CameraPosition.builder().target(new LatLng(39.869977, 32.734572)).zoom(16).bearing(0).tilt(45).build();
+            mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Camera));
         }
 
     }
