@@ -7,12 +7,14 @@ package com.acmhacettepe.developers.acmobil;
 import java.util.ArrayList;
 import java.util.Random;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -69,19 +71,33 @@ public class Chats extends Fragment implements OnClickListener {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                         if(input.getText().toString().length() > 17 || input.getText().toString().length() < 3){
-                            Toast.makeText(getActivity(), "The length of the nickname must be between 3-16 letters", Toast.LENGTH_LONG).show();
-                            nameDialog();//reshow dialog untill length is correct
+                            Toast.makeText(getActivity(), "Rumuzunuz 3-16 harf uzunluğunda olmalıdır.", Toast.LENGTH_LONG).show();
+
+                            nameDialog();//reshow dialog until length is correct
                         }
                         else {
                             nickname = input.getText().toString();
 
                         }
                     }
-                });
+                }).setOnKeyListener(new Dialog.OnKeyListener(){
+            @Override
+            public boolean onKey(DialogInterface arg0, int keyCode,
+                                 KeyEvent event) {
+                // TODO Auto-generated method stub
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    Toast.makeText(getActivity(), "Lütfen rumuzunuzu giriniz.", Toast.LENGTH_LONG).show();
+                }
+                return true;
+            }
+
+        });
         AlertDialog alert = builder.create();
         alert.setCanceledOnTouchOutside(false);
         alert.show();
+
     }
 
     @Override
@@ -90,17 +106,18 @@ public class Chats extends Fragment implements OnClickListener {
 
     public void sendTextMessage(View v) {
         String message = msg_edittext.getEditableText().toString();
-        if (!message.equalsIgnoreCase("")) {
-            final ChatMessage chatMessage = new ChatMessage(nickname,
-                    message, "" + (ChatAdapter.lastId + 1));
-            //chatMessage.setMsgID();
-            chatMessage.body = message;
-            chatMessage.Date = CommonMethods.getCurrentDate();
-            chatMessage.Time = CommonMethods.getCurrentTime();
-            msg_edittext.setText("");
-            chatAdapter.add(chatMessage);
-            chatAdapter.notifyDataSetChanged();
-        }
+            if (!message.equalsIgnoreCase("")) {
+                final ChatMessage chatMessage = new ChatMessage(nickname,
+                        message, "" + (ChatAdapter.lastId + 1));
+                //chatMessage.setMsgID();
+                chatMessage.body = message;
+                chatMessage.Date = CommonMethods.getCurrentDate();
+                chatMessage.Time = CommonMethods.getCurrentTime();
+                msg_edittext.setText("");
+                chatAdapter.add(chatMessage);
+                chatAdapter.notifyDataSetChanged();
+            }
+
     }
 
     @Override

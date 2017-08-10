@@ -31,7 +31,7 @@
     <item android:title="Kullanıcı Paneli">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_user"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Kullanıcı Ayarları" />
             <item

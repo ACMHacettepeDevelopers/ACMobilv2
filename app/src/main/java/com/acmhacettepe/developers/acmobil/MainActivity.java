@@ -201,7 +201,11 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, events).commit();
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_user) {
+            UserFragment user = new UserFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_container, user).commit();
 
         } else if (id == R.id.log_out) {
             auth.signOut();

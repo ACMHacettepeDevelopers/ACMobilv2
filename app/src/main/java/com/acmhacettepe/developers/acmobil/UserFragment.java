@@ -3,37 +3,21 @@ package com.acmhacettepe.developers.acmobil;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ExpandableListView;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Events.OnFragmentInteractionListener} interface
+ * {@link UserFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Events#newInstance} factory method to
+ * Use the {@link UserFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Events extends Fragment {
+public class UserFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -42,17 +26,10 @@ public class Events extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private DatabaseReference mDatabase;
-    SimpleCursorAdapter mAdapter;
-    ExpandableListAdapter listAdapter;
-
-    ExpandableListView expListView;
-    List<String> listDataHeader;
-    HashMap<String, List<String>> listDataChild;
 
     private OnFragmentInteractionListener mListener;
 
-    public Events() {
+    public UserFragment() {
         // Required empty public constructor
     }
 
@@ -62,11 +39,11 @@ public class Events extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Events.
+     * @return A new instance of fragment UserFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static Events newInstance(String param1, String param2) {
-        Events fragment = new Events();
+    public static UserFragment newInstance(String param1, String param2) {
+        UserFragment fragment = new UserFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -90,65 +67,10 @@ public class Events extends Fragment {
         //Remove admin panel button
         MainActivity.adminButton.setVisibility(View.GONE);
 
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference events = database.child("Events");
-        View RootView = inflater.inflate(R.layout.fragment_events, container, false);
-        final ListView eventList = (ListView) RootView.findViewById(R.id.events_expList);
-
-
-
-        events.addListenerForSingleValueEvent(new ValueEventListener() {
-
-
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                ArrayList eventList = new ArrayList<String>();
-
-                // preparing list data
-                listDataHeader = new ArrayList<String>();
-                listDataChild = new HashMap<String, List<String>>();
-
-
-                //Get data and add them to listDataHeader and listDataChild
-                for (DataSnapshot postSnapshot: snapshot.getChildren()){
-                    listDataHeader.add(postSnapshot.getKey());
-                    ArrayList temp = new ArrayList<String>();
-                        for(DataSnapshot sc: postSnapshot.getChildren()){
-                            temp.add(sc.getValue());
-                    }
-                    listDataChild.put(postSnapshot.getKey(),temp);
-                }
-
-                expListView = (ExpandableListView)  getView().findViewById(R.id.events_expList);
-
-                listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
-
-                // setting list adapter
-                expListView.setAdapter(listAdapter);
-
-
-
-
-
-
-            }
-
-
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-
-            }
-
-
-        });
 
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_events, container, false);
-
-
+        return inflater.inflate(R.layout.fragment_user, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -174,8 +96,6 @@ public class Events extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
-
 
     /**
      * This interface must be implemented by activities that contain this
