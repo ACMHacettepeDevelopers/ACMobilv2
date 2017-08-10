@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +21,20 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText inputEmail, inputPassword;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
-    private Button btnSignup, btnLogin, btnReset;
+    private Button btnSignup, btnLogin, btnReset, btnPushYemekList, btnPushMap;
     private VideoView mVideoView;
+    private DatabaseReference mDatabase;
 
 
     @Override
@@ -38,8 +45,19 @@ public class LoginActivity extends AppCompatActivity {
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+
+
         if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            String mUser = auth.getCurrentUser().getUid();
+            if(mDatabase.child("Admins").child(mUser).equals(true)){
+                startActivity(new Intent(LoginActivity.this, AdminPanel.class));
+
+            } else{
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                System.out.println("hede");
+            }
             finish();
         }
 
@@ -69,10 +87,30 @@ public class LoginActivity extends AppCompatActivity {
         btnSignup = (Button) findViewById(R.id.btn_signup);
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnReset = (Button) findViewById(R.id.btn_reset_password);
+        btnPushYemekList = (Button) findViewById(R.id.push_yemekList);
+        btnPushMap = (Button) findViewById(R.id.push_map);
+
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
+        //Push Yemek List
+        btnPushYemekList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, YemekActivity.class));
+            }
+        });
+
+        //Push Map
+        btnPushMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, MapActivity.class));
+            }
+        });
+
+        //Signup Button
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //Reset Pw Button
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //Login Button
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
