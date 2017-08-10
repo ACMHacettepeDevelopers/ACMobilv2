@@ -31,7 +31,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,23 +42,34 @@
         <activity
             android:name=".Info"
             android:label="@string/title_activity_info"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SignupActivity"
             android:label="@string/title_activity_signup"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AdminPanel" />
-        <activity android:name=".AddUser" />
-        <activity android:name=".MapActivity" />
-        <activity android:name=".YemekActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
+        <activity android:name=".AdminPanel"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".AddUser"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".MapActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".YemekActivity"
+            android:screenOrientation="portrait" />
 
 
         <!-- Maps Key -->
