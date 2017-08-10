@@ -6,7 +6,9 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,16 +24,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
-public class YemekListesi extends Fragment {
+public class YemekListesi extends Fragment implements OnFoodListCompleted {
+
     private ArrayAdapter<String> adapter;
+
     ListView yemekListesi;
+
     public YemekListesi() {
         // Required empty public constructor
-
-
     }
 
     @Override
@@ -47,24 +52,27 @@ public class YemekListesi extends Fragment {
 
         yemekListesi = (ListView) view.findViewById(R.id.yemekList);
 
+        /*adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.select_dialog_item, android.R.id.text1, new ArrayList<String>());
 
-        adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, new ArrayList<String>());
-
-        yemekListesi.setAdapter(adapter);
+        yemekListesi.setAdapter(adapter);*/
 
         if (checkConnection(getContext()) == true)
-            new GetData().execute(); // Executing asynctask if there is network connection.
+            new GetData(this).execute(); // Executing asynctask if there is network connection.
         else
             Toast.makeText(getActivity(), "Please check your internet connection and try again.", Toast.LENGTH_LONG).show();
 
         return view;
     }
 
-    class GetData extends AsyncTask<Void, String, Void>{
+    class GetData extends AsyncTask<Void, Void, ArrayList<String> > {
         URL url;
+        private final OnFoodListCompleted onTaskCompleted;
+        ArrayList<String> yemekListesi = new ArrayList<String>();
 
-        ArrayAdapter<String> adapter;
+        public GetData (OnFoodListCompleted onTaskCompleted) {
+            this.onTaskCompleted = onTaskCompleted;
+        }
 
         public InputStream getInputStream(URL url) {
             try {
@@ -75,7 +83,7 @@ public class YemekListesi extends Fragment {
         }
 
         @Override
-        protected Void doInBackground(Void... params) { // Parses the xml file and publises the progress for each item.
+        protected ArrayList<String> doInBackground(Void... params) { // Parses the xml file and publises the progress for each item.
             try {
                 url = new URL("http://www.sksdb.hacettepe.edu.tr/YemekListesi.xml");
 
@@ -87,7 +95,7 @@ public class YemekListesi extends Fragment {
                 xpp.setInput(getInputStream(url), "UTF_8");
 
 
-                boolean insideItem = false;
+                boolean isCorrectDate = true;
 
                 // Returns the type of current event: START_TAG, END_TAG, etc..
                 int eventType = xpp.getEventType();
@@ -95,22 +103,24 @@ public class YemekListesi extends Fragment {
 
                     if (eventType == XmlPullParser.START_TAG) {
 
-                        if (xpp.getName().equalsIgnoreCase("gun")) {
-                            insideItem = true;
-                        } else if (xpp.getName().equalsIgnoreCase("tarih")) {
-                            if (insideItem)
-                                publishProgress(xpp.nextText());
-                        } else if (xpp.getName().equalsIgnoreCase("yemek")) {
-                            if (insideItem)
-                                publishProgress(xpp.nextText());
-                        } else if (xpp.getName().equalsIgnoreCase("kalori")) {
-                            if (insideItem)
-                                publishProgress(xpp.nextText());
+                        if (xpp.getName().equals("tarih")) {
+                            String date = xpp.nextText();
+                            if (Integer.parseInt(date.split("\\.")[0]) >= Integer.parseInt(getCurrentDate().split("\\.")[0])
+                                    && Integer.parseInt(date.split("\\.")[1]) >= Integer.parseInt(getCurrentDate().split("\\.")[1])) {
+                                isCorrectDate = true;
+                                yemekListesi.add(date);
+                            }
+                            else {
+                                isCorrectDate = false;
+                            }
                         }
-                    } else if (eventType == XmlPullParser.END_TAG && xpp.getName().equalsIgnoreCase("gun")) {
-                        insideItem = false;
+                        else if (xpp.getName().equals("yemek" ) && isCorrectDate == true) {
+                            yemekListesi.add(xpp.nextText());
+                        }
+                        else if (xpp.getName().equals("kalori") && isCorrectDate == true) {
+                            yemekListesi.add(xpp.nextText());
+                        }
                     }
-
                     eventType = xpp.next(); //move to next element
                 }
 
@@ -121,17 +131,24 @@ public class YemekListesi extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return null;
+            return yemekListesi;
         }
 
-        @Override
+        /*@Override
         protected void onPreExecute() { // First method that is called after execute(). Gets and passes the ArrayAdapter.
             adapter = (ArrayAdapter<String>) yemekListesi.getAdapter();
-        }
+        }*/
+
+        /*@Override
+        protected void onProgressUpdate(String... values) { // This method is called in the UI thread when publishProgress() is called.
+            yemekListesi.add(values[0]);
+        }*/
 
         @Override
-        protected void onProgressUpdate(String... values) { // This method is called in the UI thread when publishProgress() is called.
-            adapter.add(values[0]);
+        protected void onPostExecute(ArrayList<String> yemekler) {
+            if (onTaskCompleted != null) {
+                onTaskCompleted.onTaskCompleted(yemekler);
+            }
         }
     }
 
@@ -141,4 +158,16 @@ public class YemekListesi extends Fragment {
         return i != null && i.isConnected() && i.isAvailable();
     }
 
+    public String getCurrentDate () {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        return df.format(calendar.getTime());
+    }
+    @Override
+    public ArrayList<String> onTaskCompleted(ArrayList<String> yemekler) {
+        return yemekler;
+    }
+
+
 }
+
