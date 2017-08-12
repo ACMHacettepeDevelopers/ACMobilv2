@@ -1,24 +1,20 @@
 package com.acmhacettepe.developers.acmobil;
 
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
 import android.widget.Toast;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -26,17 +22,14 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
 
-public class YemekListesi extends Fragment implements OnFoodListCompleted {
+public class YemekListesi extends Fragment  {
 
-    private ArrayAdapter<String> adapter;
-
-    ListView yemekListesi;
-
-    public YemekListesi() {
-        // Required empty public constructor
-    }
+    ExpandableListView expandableListView;
+    ExpListAdapterForFoodList listAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,31 +40,26 @@ public class YemekListesi extends Fragment implements OnFoodListCompleted {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        MainActivity.adminButton.setVisibility(View.GONE);
+
         View view = inflater.inflate(R.layout.fragment_yemek_listesi, container, false);
 
-        yemekListesi = (ListView) view.findViewById(R.id.yemekList);
+        expandableListView = (ExpandableListView) view.findViewById(R.id.yemekExpList);
 
-        /*adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.select_dialog_item, android.R.id.text1, new ArrayList<String>());
-
-        yemekListesi.setAdapter(adapter);*/
-
-        if (checkConnection(getContext()) == true)
-            new GetData(this).execute(); // Executing asynctask if there is network connection.
+        if (checkConnection(getContext()) == true) {
+            new GetData().execute(); // Executing asynctask if there is network connection.
+        }
         else
             Toast.makeText(getActivity(), "Please check your internet connection and try again.", Toast.LENGTH_LONG).show();
 
         return view;
     }
 
-    class GetData extends AsyncTask<Void, Void, ArrayList<String> > {
-        URL url;
-        private final OnFoodListCompleted onTaskCompleted;
-        ArrayList<String> yemekListesi = new ArrayList<String>();
+    class GetData extends AsyncTask<Void, Void, HashMap<String, List<String>> > {
 
-        public GetData (OnFoodListCompleted onTaskCompleted) {
-            this.onTaskCompleted = onTaskCompleted;
-        }
+        URL url;
+        List<String> dateList = new ArrayList<>() ;
+        HashMap<String, List<String>> yemekler = new HashMap<>();
 
         public InputStream getInputStream(URL url) {
             try {
@@ -82,7 +70,7 @@ public class YemekListesi extends Fragment implements OnFoodListCompleted {
         }
 
         @Override
-        protected ArrayList<String> doInBackground(Void... params) { // Parses the xml file and publises the progress for each item.
+        protected HashMap<String, List<String>> doInBackground(Void... params) { // Parses the xml file and publises the progress for each item.
             try {
                 url = new URL("http://www.sksdb.hacettepe.edu.tr/YemekListesi.xml");
 
@@ -98,28 +86,33 @@ public class YemekListesi extends Fragment implements OnFoodListCompleted {
 
                 // Returns the type of current event: START_TAG, END_TAG, etc..
                 int eventType = xpp.getEventType();
+                String date = null;
                 while (eventType != XmlPullParser.END_DOCUMENT) {
 
                     if (eventType == XmlPullParser.START_TAG) {
 
                         if (xpp.getName().equals("tarih")) {
-                            String date = xpp.nextText();
+
+                            date = xpp.nextText();
                             if (Integer.parseInt(date.split("\\.")[0]) >= Integer.parseInt(getCurrentDate().split("\\.")[0])
                                     && Integer.parseInt(date.split("\\.")[1]) >= Integer.parseInt(getCurrentDate().split("\\.")[1])) {
+
                                 isCorrectDate = true;
-                                yemekListesi.add(date);
+                                addToList(yemekler, date, null);
+                                dateList.add(date);
                             }
                             else {
                                 isCorrectDate = false;
                             }
                         }
                         else if (xpp.getName().equals("yemek" ) && isCorrectDate == true) {
-                            yemekListesi.add(xpp.nextText());
+                            addToList(yemekler,date,xpp.nextText());
                         }
                         else if (xpp.getName().equals("kalori") && isCorrectDate == true) {
-                            yemekListesi.add(xpp.nextText());
+                            addToList(yemekler,date,xpp.nextText());
                         }
                     }
+
                     eventType = xpp.next(); //move to next element
                 }
 
@@ -130,24 +123,15 @@ public class YemekListesi extends Fragment implements OnFoodListCompleted {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return yemekListesi;
+
+            return yemekler;
         }
 
-        /*@Override
-        protected void onPreExecute() { // First method that is called after execute(). Gets and passes the ArrayAdapter.
-            adapter = (ArrayAdapter<String>) yemekListesi.getAdapter();
-        }*/
-
-        /*@Override
-        protected void onProgressUpdate(String... values) { // This method is called in the UI thread when publishProgress() is called.
-            yemekListesi.add(values[0]);
-        }*/
-
         @Override
-        protected void onPostExecute(ArrayList<String> yemekler) {
-            if (onTaskCompleted != null) {
-                onTaskCompleted.onTaskCompleted(yemekler);
-            }
+        protected void onPostExecute(HashMap<String, List<String>> foodList) { //This method will be invoked after AsyncTask finished in UI thread.
+            // Declaring adapter and setting the adapter.
+            listAdapter = new ExpListAdapterForFoodList(getContext(), dateList, foodList ) ;
+            expandableListView.setAdapter(listAdapter);
         }
     }
 
@@ -157,16 +141,22 @@ public class YemekListesi extends Fragment implements OnFoodListCompleted {
         return i != null && i.isConnected() && i.isAvailable();
     }
 
-    public String getCurrentDate () {
+    public String getCurrentDate () { // Returns current calendar date
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
         return df.format(calendar.getTime());
     }
-    @Override
-    public ArrayList<String> onTaskCompleted(ArrayList<String> yemekler) {
-        return yemekler;
+
+    public synchronized void addToList(HashMap<String, List<String> > map, String key ,String item) { // Method for adding values to array in hashmap
+        if (map.get(key) == null) { //gets the value for an id)
+            map.put(key, new ArrayList<String>());
+        }
+        if (item != null) {
+            if (!item.trim().isEmpty()) {
+                map.get(key).add(item); //adds value to list
+            }
+        }
+        }
     }
 
-
-}
 

@@ -55,9 +55,7 @@ public class MainActivity extends AppCompatActivity
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
 
-
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
 
         //get current user
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -182,6 +180,7 @@ public class MainActivity extends AppCompatActivity
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, yemekListesi).commit();
+
         } else if (id == R.id.nav_giybet) {
             Chats giybet = new Chats();
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -213,13 +212,6 @@ public class MainActivity extends AppCompatActivity
             finish();
 
         }
-
-        /*if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.frame_container, fragment).commit();
-
-        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
