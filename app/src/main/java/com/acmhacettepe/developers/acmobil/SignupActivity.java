@@ -90,7 +90,6 @@ public class SignupActivity extends AppCompatActivity {
                 users.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
-                        System.out.println(snapshot.child(ogrNum).child("acmNum").getValue().equals(uyeNum));
                         if (snapshot.child(ogrNum).exists() &&
                                 snapshot.child(ogrNum).child("isRegistered").getValue().equals(false) &&
                                 snapshot.child(ogrNum).child("acmNum").getValue().equals(uyeNum)) {
@@ -124,7 +123,7 @@ public class SignupActivity extends AppCompatActivity {
                                             progressBar.setVisibility(View.GONE);
 
                                             mDatabase.child("AddedUsers/").child(ogrNum).child("isRegistered").setValue(true);
-                                            mDatabase.child("AddedUsers/").child(ogrNum).child("userName").setValue(username);
+                                            mDatabase.child("AddedUsers/").child(ogrNum).child("username").setValue(username);
                                             mDatabase.child("RegisteredUsers").child(auth.getCurrentUser().getUid()).setValue(username);
                                             // If sign in fails, display a message to the user. If sign in succeeds
                                             // the auth state listener will be notified and logic to handle the
@@ -145,7 +144,7 @@ public class SignupActivity extends AppCompatActivity {
 
                         } else {
 
-                                Toast.makeText(getApplicationContext(), "Ogr no hatali", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Bilgileriniz Hatalı", Toast.LENGTH_SHORT).show();
 
                         }
                     }
