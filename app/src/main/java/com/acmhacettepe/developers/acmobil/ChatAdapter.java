@@ -14,11 +14,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SyncStatusObserver;
 import android.graphics.Color;
+import android.media.Image;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -112,11 +114,17 @@ public class ChatAdapter extends BaseAdapter {
                 .findViewById(R.id.bubble_layout_parent);
         TextView username =  (TextView) vi.findViewById(R.id.username);
         username.setText(message.senderName);
+        LinearLayout pp = (LinearLayout) vi.findViewById(R.id.profilePicture);
 
         // if message is mine then align to right
         if (message.IsMe()) {
             layout.setBackgroundResource(R.drawable.bubble2);
             parent_layout.setGravity(Gravity.RIGHT);
+            parent_layout.removeAllViews();
+            parent_layout.addView(layout);
+            parent_layout.addView(pp);
+
+
         }
         // If not mine then align to left
         else {
