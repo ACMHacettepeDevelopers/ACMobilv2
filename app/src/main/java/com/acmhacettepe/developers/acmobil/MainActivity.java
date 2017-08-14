@@ -25,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener , Chats.OnFragmentInteractionListener, MapFragment.OnFragmentInteractionListener, Events.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener , Chats.OnFragmentInteractionListener, MapFragment.OnFragmentInteractionListener, Events.OnFragmentInteractionListener, UserFragment.OnFragmentInteractionListener {
 
 
     private FirebaseAuth auth;

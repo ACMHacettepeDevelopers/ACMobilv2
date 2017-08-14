@@ -1,13 +1,33 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.acmhacettepe.developers.acmobil.UserFragment">
+    android:fitsSystemWindows="true"
+    tools:context="com.acmhacettepe.developers.acmobil.LoginActivity">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <LinearLayout
+        android:id="@+id/user"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="top|center"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_horizontal_margin">
 
-</FrameLayout>
+
+        <ImageView
+            android:id="@+id/profileP"
+            android:layout_width="160sp"
+            android:layout_height="160sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <!-- Login Button -->
+
+        <!-- Link to Login Screen -->
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>
