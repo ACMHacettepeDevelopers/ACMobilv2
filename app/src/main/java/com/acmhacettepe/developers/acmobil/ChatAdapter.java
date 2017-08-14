@@ -32,7 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class ChatAdapter extends BaseAdapter {
 
     private DatabaseReference root;
-    public static int lastId = 0;
+    public static int lastId = 1000000;
 
     private static LayoutInflater inflater = null;
     ArrayList<ChatMessage> chatMessageList;
@@ -48,9 +48,10 @@ public class ChatAdapter extends BaseAdapter {
                 DataSnapshot i = dataSnapshot.getChildren().iterator().next();
                 String body = ((HashMap)(i).getValue()).get("body").toString();
                 String senderName = ((HashMap)(i).getValue()).get("senderName").toString();
-                String msgid = ((HashMap)(i).getValue()).get("msgid").toString();
+                String[] msgidParts = (((HashMap)(i).getValue()).get("msgid").toString().split("-"));
+                String msgid = msgidParts[0];
                 String userId = ((HashMap)(i).getValue()).get("userId").toString();
-                lastId = Integer.valueOf(((HashMap)(i).getValue()).get("msgid").toString());
+                lastId = Integer.valueOf(msgidParts[0]);
                 ChatMessage msg1 = new ChatMessage(senderName,body,msgid,userId);
                 msg1.Date = ((HashMap)(i).getValue()).get("Date").toString();
                 msg1.Time = ((HashMap)(i).getValue()).get("Time").toString();

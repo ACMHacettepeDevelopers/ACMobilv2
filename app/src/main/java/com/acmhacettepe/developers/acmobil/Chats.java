@@ -109,7 +109,7 @@ public class Chats extends Fragment implements OnClickListener {
             if (!message.equalsIgnoreCase("")) {
                 final ChatMessage chatMessage = new ChatMessage(nickname,
                         message, "" + (ChatAdapter.lastId + 1));
-                //chatMessage.setMsgID();
+                chatMessage.setMsgID();
                 chatMessage.body = message;
                 chatMessage.Date = CommonMethods.getCurrentDate();
                 chatMessage.Time = CommonMethods.getCurrentTime();

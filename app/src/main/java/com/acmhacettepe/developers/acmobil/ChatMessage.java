@@ -33,8 +33,7 @@ public class ChatMessage {
     }
 
     public void setMsgID() {
-        msgid += "-" + String.format("%02d", new Random().nextInt(100000));
-        System.out.println(msgid);
+        msgid += "-" + String.format("%02d", new Random().nextInt(1000));
     }
 
     public boolean IsMe(){
