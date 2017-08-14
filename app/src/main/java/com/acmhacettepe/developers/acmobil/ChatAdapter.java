@@ -110,6 +110,8 @@ public class ChatAdapter extends BaseAdapter {
                 .findViewById(R.id.bubble_layout);
         LinearLayout parent_layout = (LinearLayout) vi
                 .findViewById(R.id.bubble_layout_parent);
+        TextView username =  (TextView) vi.findViewById(R.id.username);
+        username.setText(message.senderName);
 
         // if message is mine then align to right
         if (message.IsMe()) {
@@ -120,6 +122,7 @@ public class ChatAdapter extends BaseAdapter {
         else {
             layout.setBackgroundResource(R.drawable.bubble1);
             parent_layout.setGravity(Gravity.LEFT);
+
         }
         msg.setTextColor(Color.BLACK);
         return vi;
