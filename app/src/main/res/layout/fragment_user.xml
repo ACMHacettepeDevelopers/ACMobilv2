@@ -24,6 +24,11 @@
             android:layout_marginBottom="30dp"
             android:src="@mipmap/ic_launcher" />
 
+        <ListView
+            android:id="@+id/userList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <!-- Login Button -->
 
         <!-- Link to Login Screen -->

@@ -10,7 +10,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,6 +27,7 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import static com.acmhacettepe.developers.acmobil.R.id.imageView;
+import static com.acmhacettepe.developers.acmobil.R.id.view_offset_helper;
 
 
 /**
@@ -82,6 +87,8 @@ public class UserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        final View _view = inflater.inflate(R.layout.fragment_user, container, false);
+
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference registeredUsers = db.child("RegisteredUsers");
 
@@ -93,7 +100,7 @@ public class UserFragment extends Fragment {
         registeredUsers.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                final ImageView pp = (ImageView) getView().findViewById(R.id.profileP);
+                final ImageView pp = (ImageView) _view.findViewById(R.id.profileP);
 
                 auth = FirebaseAuth.getInstance();
 
@@ -112,15 +119,31 @@ public class UserFragment extends Fragment {
             }
         });
 
+        String[] items = {"Kullanıcı Adını Değiştir", "Şifreyi Değiştir"};
+        ListAdapter userAdapter = new ArrayAdapter<String>(_view.getContext(), android.R.layout.simple_list_item_2, items);
+        ListView userList = (ListView) _view.findViewById(R.id.userList);
+        System.out.println(userList);
+        userList.setAdapter(userAdapter);
+
+        userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position==0){ //Change username
+
+                } else if (position==1){ //Change password
+
+                }
 
 
-
+            }
+        });
 
 
 
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user, container, false);
+        return _view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
