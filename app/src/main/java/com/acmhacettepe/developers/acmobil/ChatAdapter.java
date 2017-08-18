@@ -121,14 +121,8 @@ public class ChatAdapter extends BaseAdapter {
 
         // if message is mine then align to right
         if (message.IsMe()) {
-            layout.setBackgroundResource(R.drawable.bubble2);
-            parent_layout.setGravity(Gravity.RIGHT);
-            ViewGroup.LayoutParams params = pp.getLayoutParams();
-            ViewGroup.LayoutParams params1 = layout.getLayoutParams();
-            parent_layout.removeAllViews();
-            parent_layout.addView(layout,params1);
-            parent_layout.addView(pp,params);
-            msgUsername.setGravity(Gravity.RIGHT);
+            layout.setBackgroundResource(R.drawable.bubble1);
+            parent_layout.setGravity(Gravity.LEFT);
 
 
         }
