@@ -166,15 +166,19 @@ public class UserFragment extends Fragment {
                                 public void onClick(DialogInterface dialog, int which) {
                                     auth = FirebaseAuth.getInstance();
                                     String text = input.getText().toString();
+                                    if(text.length() < 3 || text.length() >16){
+                                        Toast.makeText(getContext(), "Yeni kullanıcı adı 3-16 karakter arasında olmalıdır", Toast.LENGTH_LONG).show();
+                                    }
+                                    else {
+                                        final String User = auth.getCurrentUser().getUid();
+                                        final TextView userName = (TextView) _view.findViewById(R.id.userName);
+                                        final ImageView pp = (ImageView) _view.findViewById(R.id.profileP);
 
-                                    final String User = auth.getCurrentUser().getUid();
-                                    final TextView userName = (TextView) _view.findViewById(R.id.userName);
-                                    final ImageView pp = (ImageView) _view.findViewById(R.id.profileP);
-
-                                    mDatabase = FirebaseDatabase.getInstance().getReference();
-                                    mDatabase.child("RegisteredUsers").child(User).child("username").setValue(text);
-                                    userName.setText(text);
-                                    Picasso.with(getContext()).load("https://robohash.org/" + text + "?set=set2&bgset=bg2&size=160x160").transform(new CircleTransform()).into(pp);
+                                        mDatabase = FirebaseDatabase.getInstance().getReference();
+                                        mDatabase.child("RegisteredUsers").child(User).child("username").setValue(text);
+                                        userName.setText(text);
+                                        Picasso.with(getContext()).load("https://robohash.org/" + text + "?set=set2&bgset=bg2&size=160x160").transform(new CircleTransform()).into(pp);
+                                    }
 
 
                                 }
