@@ -90,7 +90,7 @@ public class Chats extends Fragment implements OnClickListener {
                 final ChatMessage chatMessage = new ChatMessage(nickname,
                         message, "" + (ChatAdapter.lastId + 1));
                 chatMessage.setMsgID();
-                chatMessage.body = message;
+                chatMessage.body = message.replace("\n", "");
                 chatMessage.Date = CommonMethods.getCurrentDate();
                 Date currentTime = Calendar.getInstance().getTime();
                 SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
