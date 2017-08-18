@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -42,11 +43,11 @@ public class AddUser extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
                         String lastNumber = snapshot.getValue().toString();
-                        System.out.println("sending");
                         final String ogrNumText = ogrNum.getText().toString().trim();
                         User user = new User("", lastNumber, false, false);
                         mDatabase.child("LastNumber").setValue(Integer.valueOf(lastNumber)+1);
                         mDatabase.child("AddedUsers").child(ogrNumText).setValue(user);
+                        Toast.makeText(AddUser.this, "Üye Başarıyla Eklendi", Toast.LENGTH_LONG).show();
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {

@@ -56,13 +56,11 @@ public class ChatAdapter extends BaseAdapter {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Chats.nickname = ((String) (dataSnapshot).getValue());
-                System.out.println(Chats.nickname);
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Chats.nickname = ((String) (dataSnapshot).getValue());
-                System.out.println(Chats.nickname);
             }
 
             @Override
