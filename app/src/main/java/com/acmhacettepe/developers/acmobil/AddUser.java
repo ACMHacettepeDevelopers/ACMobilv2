@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +21,8 @@ public class AddUser extends AppCompatActivity {
     private DatabaseReference mDatabase;
     Button button;
     private EditText ogrNum;
+    private TextView addUserNum, addUserAcmNum;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,9 @@ public class AddUser extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         ogrNum = (EditText) findViewById(R.id.ogrNumSignUp);
+        addUserNum = (TextView) findViewById(R.id.addUserNumber);
+        addUserAcmNum = (TextView) findViewById(R.id.addUserAcmNumber);
+
         final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference lastNumber = database.child("LastNumber");
 
@@ -44,8 +50,11 @@ public class AddUser extends AppCompatActivity {
                     public void onDataChange(DataSnapshot snapshot) {
                         String lastNumber = snapshot.getValue().toString();
                         final String ogrNumText = ogrNum.getText().toString().trim();
+                        addUserNum.setText(ogrNumText);
                         User user = new User("", lastNumber, false, false);
-                        mDatabase.child("LastNumber").setValue(Integer.valueOf(lastNumber)+1);
+                        int acmNum = Integer.valueOf(lastNumber)+1;
+                        mDatabase.child("LastNumber").setValue(acmNum);
+                        addUserAcmNum.setText(String.valueOf(acmNum));
                         mDatabase.child("AddedUsers").child(ogrNumText).setValue(user);
                         Toast.makeText(AddUser.this, "Üye Başarıyla Eklendi", Toast.LENGTH_LONG).show();
                     }
