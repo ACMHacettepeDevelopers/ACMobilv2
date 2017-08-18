@@ -14,7 +14,8 @@ public class ChatMessage {
     public String Date, Time;
     public String msgid;
     public String userId;
-    private FirebaseAuth auth;
+    private static FirebaseAuth auth = FirebaseAuth.getInstance();
+    public static String userId1 = auth.getCurrentUser().getUid();
 
 
     public ChatMessage(String Sender, String messageString, String ID) {
@@ -22,7 +23,7 @@ public class ChatMessage {
         body = messageString;
         senderName = Sender;
         msgid = ID;
-        userId = auth.getCurrentUser().getUid();
+        userId = userId1;
     }
 
     public ChatMessage(String Sender, String messageString, String ID, String uid) {

@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.SyncStatusObserver;
 import android.graphics.Color;
 import android.media.Image;
+import android.provider.ContactsContract;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,7 @@ import org.w3c.dom.Text;
 public class ChatAdapter extends BaseAdapter {
 
     private DatabaseReference root;
+    private DatabaseReference userRoot;
     public static int lastId = 1000000;
 
     private static LayoutInflater inflater = null;
@@ -49,6 +51,35 @@ public class ChatAdapter extends BaseAdapter {
         chatMessageList = list;
         inflater = (LayoutInflater) activity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        userRoot = FirebaseDatabase.getInstance().getReference().child("RegisteredUsers");//.child(ChatMessage.userId);
+        userRoot.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Chats.nickname = ((HashMap) (dataSnapshot).getValue()).get("username").toString();
+                System.out.println(Chats.nickname);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                DataSnapshot i = dataSnapshot.getChildren().iterator().next();
+                Chats.nickname = ((HashMap)(i).getValue()).get("username").toString();
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         root = FirebaseDatabase.getInstance().getReference().child("Giybet").child("Messages");
         root.addChildEventListener(new ChildEventListener() {
             @Override

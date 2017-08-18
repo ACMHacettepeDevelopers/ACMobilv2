@@ -62,9 +62,6 @@ public class Chats extends Fragment implements OnClickListener {
         MainActivity.mainImage.setVisibility(View.GONE);
         MainActivity.mainText.setVisibility(View.GONE);
 
-        //Take username from user
-        nameDialog();
-
         msg_edittext = (EditText) view.findViewById(R.id.messageEditText);
         msgListView = (ListView) view.findViewById(R.id.msgListView);
         ImageButton sendButton = (ImageButton) view
@@ -82,43 +79,6 @@ public class Chats extends Fragment implements OnClickListener {
         return view;
     }
 
-    private void nameDialog(){
-        final EditText input = new EditText(getContext());
-        AlertDialog.Builder builder;
-        builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Enter Nickname")
-                .setView(input)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        if(input.getText().toString().length() > 17 || input.getText().toString().length() < 3){
-                            Toast.makeText(getActivity(), "Rumuzunuz 3-16 harf uzunluğunda olmalıdır.", Toast.LENGTH_LONG).show();
-
-                            nameDialog();//reshow dialog until length is correct
-                        }
-                        else {
-                            nickname = input.getText().toString();
-
-                        }
-                    }
-                }).setOnKeyListener(new Dialog.OnKeyListener(){
-            @Override
-            public boolean onKey(DialogInterface arg0, int keyCode,
-                                 KeyEvent event) {
-                // TODO Auto-generated method stub
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    Toast.makeText(getActivity(), "Lütfen rumuzunuzu giriniz.", Toast.LENGTH_LONG).show();
-                }
-                return true;
-            }
-
-        });
-        AlertDialog alert = builder.create();
-        alert.setCanceledOnTouchOutside(false);
-        alert.show();
-
-    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
