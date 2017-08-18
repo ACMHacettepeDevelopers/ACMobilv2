@@ -64,7 +64,11 @@
                 android:inputType="textPassword"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
+
+
         </android.support.design.widget.TextInputLayout>
+
+
 
         <!-- Login Button -->
 

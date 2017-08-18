@@ -116,12 +116,19 @@ public class UserFragment extends Fragment {
                 final TextView userName = (TextView) _view.findViewById(R.id.userName);
 
                 auth = FirebaseAuth.getInstance();
+                FirebaseUser user = auth.getCurrentUser();
+                if(user!=null){
+                    final String User = user.getUid();
 
-                final String User = auth.getCurrentUser().getUid();
+                    userName.setText(snapshot.child(User).child("username").getValue().toString());
 
-                userName.setText(snapshot.child(User).child("username").getValue().toString());
+                    Picasso.with(getContext()).load("https://robohash.org/" + snapshot.child(User).child("username").getValue()+ "?set=set2&bgset=bg2&size=160x160").transform(new CircleTransform()).into(pp);
 
-                Picasso.with(getContext()).load("https://robohash.org/" + snapshot.child(User).child("username").getValue()+ "?set=set2&bgset=bg2&size=160x160").transform(new CircleTransform()).into(pp);
+                } else{
+
+                }
+
+
 
 
             }

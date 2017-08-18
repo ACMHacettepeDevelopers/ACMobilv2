@@ -25,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private EditText inputEmail, inputPassword, inputOgrNum, inputUsername, inputUyeNum;
+    private EditText inputEmail, inputPassword, inputOgrNum, inputUsername, inputUyeNum, inputPassword2;
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
@@ -66,6 +66,7 @@ public class SignupActivity extends AppCompatActivity {
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
+        inputPassword2 = (EditText) findViewById(R.id.password2);
         inputOgrNum = (EditText) findViewById(R.id.ogrNum);
         inputUsername = (EditText) findViewById(R.id.username);
         inputUyeNum = (EditText) findViewById(R.id.uyeNum);
@@ -79,6 +80,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 final String email = inputEmail.getText().toString().trim();
                 final String password = inputPassword.getText().toString().trim();
+                final String password2 = inputPassword2.getText().toString().trim();
                 final String ogrNum = inputOgrNum.getText().toString().trim();
                 final String username = inputUsername.getText().toString().trim();
                 final String uyeNum = inputUyeNum.getText().toString().trim();
@@ -97,17 +99,21 @@ public class SignupActivity extends AppCompatActivity {
 
 
                             if (TextUtils.isEmpty(email)) {
-                                Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Mail adresi giriniz", Toast.LENGTH_SHORT).show();
                                 return;
                             }
 
                             if (TextUtils.isEmpty(password)) {
-                                Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Lütfen şifre giriniz", Toast.LENGTH_SHORT).show();
                                 return;
                             }
 
                             if (password.length() < 6) {
-                                Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Şifreniz çok kısa, en az 6 karakterli bir şifre giriniz", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            if (!password.equals(password2)){
+                                Toast.makeText(getApplicationContext(), "Şifrelerinizi kontrol ediniz", Toast.LENGTH_SHORT).show();
                                 return;
                             }
 
