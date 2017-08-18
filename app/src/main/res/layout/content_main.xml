@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Acmobil uygulamasına hoş geldin. Soldaki menüden seçim yaparak uygulamadan tam olarak yararlanabilirsiniz." />
+            android:text="Acmobil uygulamasına hoş geldiniz. Soldaki menüden seçim yaparak uygulamadan tam olarak yararlanabilirsiniz." />
 
         <ImageView
             android:id="@+id/imageView2"
