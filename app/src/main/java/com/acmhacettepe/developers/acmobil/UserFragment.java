@@ -1,20 +1,28 @@
 package com.acmhacettepe.developers.acmobil;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,7 +34,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import static com.acmhacettepe.developers.acmobil.Chats.context;
 import static com.acmhacettepe.developers.acmobil.R.id.imageView;
+import static com.acmhacettepe.developers.acmobil.R.id.user;
 import static com.acmhacettepe.developers.acmobil.R.id.view_offset_helper;
 
 
@@ -45,6 +55,7 @@ public class UserFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private FirebaseAuth auth;
+    private DatabaseReference mDatabase;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -93,20 +104,22 @@ public class UserFragment extends Fragment {
         final DatabaseReference registeredUsers = db.child("RegisteredUsers");
 
 
-
         //Remove admin panel button
         MainActivity.adminButton.setVisibility(View.GONE);
+        MainActivity.mainImage.setVisibility(View.GONE);
+        MainActivity.mainText.setVisibility(View.GONE);
 
         registeredUsers.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 final ImageView pp = (ImageView) _view.findViewById(R.id.profileP);
+                final TextView userName = (TextView) _view.findViewById(R.id.userName);
 
                 auth = FirebaseAuth.getInstance();
 
                 final String User = auth.getCurrentUser().getUid();
 
-                System.out.println(pp);
+                userName.setText(snapshot.child(User).child("username").getValue().toString());
 
                 Picasso.with(getContext()).load("https://robohash.org/" + snapshot.child(User).child("username").getValue()+ "?set=set2&bgset=bg2&size=160x160").transform(new CircleTransform()).into(pp);
 
@@ -120,19 +133,52 @@ public class UserFragment extends Fragment {
         });
 
         String[] items = {"Kullanıcı Adını Değiştir", "Şifreyi Değiştir"};
-        ListAdapter userAdapter = new ArrayAdapter<String>(_view.getContext(), android.R.layout.simple_list_item_2, items);
+
+
+
+        ListAdapter userAdapter = new ArrayAdapter<String>(_view.getContext(), android.R.layout.simple_list_item_1, items);
         ListView userList = (ListView) _view.findViewById(R.id.userList);
         System.out.println(userList);
         userList.setAdapter(userAdapter);
+
+
+
 
         userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(position==0){ //Change username
+                    final EditText input = new EditText(getContext());
+                    AlertDialog.Builder builder;
+                    builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Kullanıcı Adı Giriniz")
+                            .setView(input)
+                            .setPositiveButton("Tamam", new DialogInterface.OnClickListener(){
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    auth = FirebaseAuth.getInstance();
+                                    String text = input.getText().toString();
+
+                                    final String User = auth.getCurrentUser().getUid();
+                                    final TextView userName = (TextView) _view.findViewById(R.id.userName);
+                                    final ImageView pp = (ImageView) _view.findViewById(R.id.profileP);
+
+                                    mDatabase = FirebaseDatabase.getInstance().getReference();
+                                    mDatabase.child("RegisteredUsers").child(User).child("username").setValue(text);
+                                    userName.setText(text);
+                                    Picasso.with(getContext()).load("https://robohash.org/" + text + "?set=set2&bgset=bg2&size=160x160").transform(new CircleTransform()).into(pp);
+
+
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.setCanceledOnTouchOutside(true);
+                    alert.show();
 
                 } else if (position==1){ //Change password
-
+                    Intent intent = new Intent(getActivity(),ResetPasswordActivity.class);
+                    startActivity(intent);
                 }
 
 
@@ -152,6 +198,8 @@ public class UserFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+
+
 
     @Override
     public void onAttach(Context context) {

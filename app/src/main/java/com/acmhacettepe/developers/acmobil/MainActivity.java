@@ -225,7 +225,8 @@ public class MainActivity extends AppCompatActivity
         //Fragment fragment = null;
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            startActivity(new Intent(MainActivity.this, MainActivity.class));
+            finish();
         } else if (id == R.id.nav_yemekListesi) {
             YemekListesi yemekListesi = new YemekListesi();
             FragmentManager fragmentManager = getSupportFragmentManager();
