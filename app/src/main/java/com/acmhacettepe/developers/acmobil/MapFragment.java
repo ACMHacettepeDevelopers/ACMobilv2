@@ -88,6 +88,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Adapter
 
         //Remove admin panel button
         MainActivity.adminButton.setVisibility(View.GONE);
+        MainActivity.mainImage.setVisibility(View.GONE);
+        MainActivity.mainText.setVisibility(View.GONE);
 
 
 

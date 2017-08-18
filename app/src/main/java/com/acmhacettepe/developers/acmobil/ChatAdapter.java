@@ -30,6 +30,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Text;
+
 
 public class ChatAdapter extends BaseAdapter {
 
@@ -115,14 +117,18 @@ public class ChatAdapter extends BaseAdapter {
         TextView username =  (TextView) vi.findViewById(R.id.username);
         username.setText(message.senderName);
         LinearLayout pp = (LinearLayout) vi.findViewById(R.id.profilePicture);
+        TextView msgUsername = (TextView) vi.findViewById(R.id.username);
 
         // if message is mine then align to right
         if (message.IsMe()) {
             layout.setBackgroundResource(R.drawable.bubble2);
             parent_layout.setGravity(Gravity.RIGHT);
+            ViewGroup.LayoutParams params = pp.getLayoutParams();
+            ViewGroup.LayoutParams params1 = layout.getLayoutParams();
             parent_layout.removeAllViews();
-            parent_layout.addView(layout);
-            parent_layout.addView(pp);
+            parent_layout.addView(layout,params1);
+            parent_layout.addView(pp,params);
+            msgUsername.setGravity(Gravity.RIGHT);
 
 
         }

@@ -41,6 +41,8 @@ public class YemekListesi extends Fragment  {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         MainActivity.adminButton.setVisibility(View.GONE);
+        MainActivity.mainImage.setVisibility(View.GONE);
+        MainActivity.mainText.setVisibility(View.GONE);
 
         View view = inflater.inflate(R.layout.fragment_yemek_listesi, container, false);
 

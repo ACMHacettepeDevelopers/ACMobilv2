@@ -1,9 +1,11 @@
 package com.acmhacettepe.developers.acmobil;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -14,7 +16,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,6 +37,12 @@ public class MainActivity extends AppCompatActivity
     private FirebaseAuth.AuthStateListener authListener;
     private DatabaseReference mDatabase;
     public static Button adminButton;
+    public static TextView mainText;
+    public static ImageView mainImage;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +54,41 @@ public class MainActivity extends AppCompatActivity
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                //Called when a drawer's position changes.
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                //Called when a drawer has settled in a completely open state.
+                //The drawer is interactive at this point.
+                // If you have 2 drawers (left and right) you can distinguish
+                // them by using id of the drawerView. int id = drawerView.getId();
+                // id will be your layout's id: for example R.id.left_drawer
+                InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                // Called when a drawer has settled in a completely closed state.
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+                // Called when the drawer motion state changes. The new state will be one of STATE_IDLE, STATE_DRAGGING or STATE_SETTLING.
+            }
+        });
+
+
+
+
+
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -109,6 +155,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
         adminButton = (Button) findViewById(R.id.adminPaneli);
+        mainText = (TextView) findViewById(R.id.textView4);
+        mainImage = (ImageView) findViewById(R.id.imageView2);
         adminButton.setVisibility(View.GONE);
 
         adminButton.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +170,7 @@ public class MainActivity extends AppCompatActivity
 
 
     }
+
 
     @Override
     public void onFragmentInteraction(Uri uri) {
@@ -165,6 +214,10 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
+
+
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -186,6 +239,7 @@ public class MainActivity extends AppCompatActivity
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, giybet).commit();
+
 
         } else if (id == R.id.nav_manage) {
             MapFragment mapFragment = new MapFragment();

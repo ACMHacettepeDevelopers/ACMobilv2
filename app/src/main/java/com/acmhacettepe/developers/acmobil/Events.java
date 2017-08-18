@@ -4,13 +4,16 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -77,6 +80,7 @@ public class Events extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -86,9 +90,15 @@ public class Events extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_events, container, false);
+        LinearLayout mainLayout = (LinearLayout) view.findViewById(R.id.mainLayout);
+
+
 
         //Remove admin panel button
         MainActivity.adminButton.setVisibility(View.GONE);
+        MainActivity.mainImage.setVisibility(View.GONE);
+        MainActivity.mainText.setVisibility(View.GONE);
 
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         DatabaseReference events = database.child("Events");
@@ -119,7 +129,7 @@ public class Events extends Fragment {
                     listDataChild.put(postSnapshot.getKey(),temp);
                 }
 
-                expListView = (ExpandableListView)  getView().findViewById(R.id.events_expList);
+                expListView = (ExpandableListView)  view.findViewById(R.id.events_expList);
 
                 listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
 
@@ -146,7 +156,7 @@ public class Events extends Fragment {
 
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_events, container, false);
+        return view;
 
 
     }
@@ -161,6 +171,7 @@ public class Events extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -174,6 +185,7 @@ public class Events extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
 
 
 
