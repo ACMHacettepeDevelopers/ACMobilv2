@@ -78,89 +78,95 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                final String email = inputEmail.getText().toString().trim();
-                final String password = inputPassword.getText().toString().trim();
-                final String password2 = inputPassword2.getText().toString().trim();
-                final String ogrNum = inputOgrNum.getText().toString().trim();
                 final String username = inputUsername.getText().toString().trim();
-                final String uyeNum = inputUyeNum.getText().toString().trim();
-                DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-                DatabaseReference users = database.child("AddedUsers");
-                mDatabase = FirebaseDatabase.getInstance().getReference();
+                if(username.length() < 3 || username.length() >32){
+                    Toast.makeText(SignupActivity.this, "Kullanıcı adı 3-32 karakter arasında olmalıdır", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    final String email = inputEmail.getText().toString().trim();
+                    final String password = inputPassword.getText().toString().trim();
+                    final String password2 = inputPassword2.getText().toString().trim();
+                    final String ogrNum = inputOgrNum.getText().toString().trim();
+                    final String uyeNum = inputUyeNum.getText().toString().trim();
+                    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+                    DatabaseReference users = database.child("AddedUsers");
+                    mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
-                users.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        if (snapshot.child(ogrNum).exists() &&
-                                snapshot.child(ogrNum).child("isRegistered").getValue().equals(false) &&
-                                snapshot.child(ogrNum).child("acmNum").getValue().equals(uyeNum)) {
-
-
-
-                            if (TextUtils.isEmpty(email)) {
-                                Toast.makeText(getApplicationContext(), "Mail adresi giriniz", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-
-                            if (TextUtils.isEmpty(password)) {
-                                Toast.makeText(getApplicationContext(), "Lütfen şifre giriniz", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-
-                            if (password.length() < 6) {
-                                Toast.makeText(getApplicationContext(), "Şifreniz çok kısa, en az 6 karakterli bir şifre giriniz", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                            if (!password.equals(password2)){
-                                Toast.makeText(getApplicationContext(), "Şifrelerinizi kontrol ediniz", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
+                    users.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            if (snapshot.child(ogrNum).exists() &&
+                                    snapshot.child(ogrNum).child("isRegistered").getValue().equals(false) &&
+                                    snapshot.child(ogrNum).child("acmNum").getValue().equals(uyeNum)) {
 
 
 
-                            progressBar.setVisibility(View.VISIBLE);
+                                if (TextUtils.isEmpty(email)) {
+                                    Toast.makeText(getApplicationContext(), "Mail adresi giriniz", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
 
-                            //create user
-                            auth.createUserWithEmailAndPassword(email, password)
-                                    .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<AuthResult> task) {
-                                            progressBar.setVisibility(View.GONE);
+                                if (TextUtils.isEmpty(password)) {
+                                    Toast.makeText(getApplicationContext(), "Lütfen şifre giriniz", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
 
-                                            mDatabase.child("AddedUsers/").child(ogrNum).child("isRegistered").setValue(true);
-                                            mDatabase.child("AddedUsers/").child(ogrNum).child("username").setValue(username);
-                                            mDatabase.child("RegisteredUsers").child(auth.getCurrentUser().getUid()).child("username").setValue(username);
-                                            mDatabase.child("RegisteredUsers").child(auth.getCurrentUser().getUid()).child("acmNum").setValue(uyeNum);
-                                            // If sign in fails, display a message to the user. If sign in succeeds
-                                            // the auth state listener will be notified and logic to handle the
-                                            // signed in user can be handled in the listener.
-                                            if (!task.isSuccessful()) {
-                                                Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(),
-                                                        Toast.LENGTH_SHORT).show();
-                                            } else {
-                                                if(mDatabase.child("AddedUsers/").child(ogrNum).child("isAdmin").equals(true)){
-                                                    startActivity(new Intent(SignupActivity.this, AdminPanel.class));
-                                                } else{
-                                                    startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                                if (password.length() < 6) {
+                                    Toast.makeText(getApplicationContext(), "Şifreniz çok kısa, en az 6 karakterli bir şifre giriniz", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                if (!password.equals(password2)){
+                                    Toast.makeText(getApplicationContext(), "Şifrelerinizi kontrol ediniz", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+
+
+                                progressBar.setVisibility(View.VISIBLE);
+
+                                //create user
+                                auth.createUserWithEmailAndPassword(email, password)
+                                        .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                progressBar.setVisibility(View.GONE);
+
+                                                mDatabase.child("AddedUsers/").child(ogrNum).child("isRegistered").setValue(true);
+                                                mDatabase.child("AddedUsers/").child(ogrNum).child("username").setValue(username);
+                                                mDatabase.child("RegisteredUsers").child(auth.getCurrentUser().getUid()).child("username").setValue(username);
+                                                mDatabase.child("RegisteredUsers").child(auth.getCurrentUser().getUid()).child("acmNum").setValue(uyeNum);
+                                                // If sign in fails, display a message to the user. If sign in succeeds
+                                                // the auth state listener will be notified and logic to handle the
+                                                // signed in user can be handled in the listener.
+                                                if (!task.isSuccessful()) {
+                                                    Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(),
+                                                            Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    if(mDatabase.child("AddedUsers/").child(ogrNum).child("isAdmin").equals(true)){
+                                                        startActivity(new Intent(SignupActivity.this, AdminPanel.class));
+                                                    } else{
+                                                        startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                                                    }
+                                                    finish();
                                                 }
-                                                finish();
                                             }
-                                        }
-                                    });
+                                        });
 
-                        } else {
+                            } else {
 
                                 Toast.makeText(getApplicationContext(), "Bilgileriniz Hatalı", Toast.LENGTH_SHORT).show();
 
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
+                }
+
 
 
 

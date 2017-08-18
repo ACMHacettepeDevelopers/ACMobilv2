@@ -166,8 +166,8 @@ public class UserFragment extends Fragment {
                                 public void onClick(DialogInterface dialog, int which) {
                                     auth = FirebaseAuth.getInstance();
                                     String text = input.getText().toString();
-                                    if(text.length() < 3 || text.length() >16){
-                                        Toast.makeText(getContext(), "Yeni kullanıcı adı 3-16 karakter arasında olmalıdır", Toast.LENGTH_LONG).show();
+                                    if(text.length() < 3 || text.length() >32){
+                                        Toast.makeText(getContext(), "Yeni kullanıcı adı 3-32 karakter arasında olmalıdır", Toast.LENGTH_LONG).show();
                                     }
                                     else {
                                         final String User = auth.getCurrentUser().getUid();
