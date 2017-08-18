@@ -4,7 +4,10 @@ package com.acmhacettepe.developers.acmobil;
  * Created by Oguz on 8/6/2017.
  */
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 import android.app.Dialog;
@@ -129,7 +132,10 @@ public class Chats extends Fragment implements OnClickListener {
                 chatMessage.setMsgID();
                 chatMessage.body = message;
                 chatMessage.Date = CommonMethods.getCurrentDate();
-                chatMessage.Time = CommonMethods.getCurrentTime();
+                Date currentTime = Calendar.getInstance().getTime();
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                String currentDateandTime = sdf.format(currentTime);
+                chatMessage.Time = currentDateandTime;
                 msg_edittext.setText("");
                 chatAdapter.add(chatMessage);
                 chatAdapter.notifyDataSetChanged();
