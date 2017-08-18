@@ -6,23 +6,23 @@
             <menu>
                 <item
                     android:id="@+id/nav_camera"
-                    android:icon="@drawable/ic_menu_camera"
+                    android:icon="@drawable/ic_home_black_24dp"
                     android:title="Ana Sayfa" />
                 <item
                     android:id="@+id/nav_yemekListesi"
-                    android:icon="@drawable/ic_menu_gallery"
+                    android:icon="@drawable/ic_local_cafe_black_24dp"
                     android:title="Yemek Listesi" />
                 <item
                     android:id="@+id/nav_events"
-                    android:icon="@drawable/ic_menu_gallery"
+                    android:icon="@drawable/ic_event_black_24dp"
                     android:title="Etkinlikler" />
                 <item
                     android:id="@+id/nav_giybet"
-                    android:icon="@drawable/ic_menu_slideshow"
+                    android:icon="@drawable/ic_chat_black_24dp"
                     android:title="Gıybet" />
                 <item
                     android:id="@+id/nav_manage"
-                    android:icon="@drawable/ic_menu_manage"
+                    android:icon="@drawable/ic_add_location_black_24dp"
                     android:title="Harita" />
             </menu>
         </item>
@@ -32,11 +32,11 @@
         <menu>
             <item
                 android:id="@+id/nav_user"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/ic_face_black_24dp"
                 android:title="Kullanıcı Ayarları" />
             <item
                 android:id="@+id/log_out"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_exit_to_app_black_24dp"
                 android:title="Çıkış Yap" />
         </menu>
     </item>
