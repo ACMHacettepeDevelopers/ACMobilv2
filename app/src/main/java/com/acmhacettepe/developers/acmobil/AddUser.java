@@ -54,7 +54,7 @@ public class AddUser extends AppCompatActivity {
                         User user = new User("", lastNumber, false, false);
                         int acmNum = Integer.valueOf(lastNumber)+1;
                         mDatabase.child("LastNumber").setValue(acmNum);
-                        addUserAcmNum.setText(String.valueOf(acmNum));
+                        addUserAcmNum.setText(String.valueOf(acmNum-1));
                         mDatabase.child("AddedUsers").child(ogrNumText).setValue(user);
                         Toast.makeText(AddUser.this, "Üye Başarıyla Eklendi", Toast.LENGTH_LONG).show();
                     }
