@@ -46,6 +46,7 @@ public class Chats extends Fragment implements OnClickListener {
     public static ArrayList<ChatMessage> chatlist;
     public static ChatAdapter chatAdapter;
     ListView msgListView;
+    public static Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,6 +75,7 @@ public class Chats extends Fragment implements OnClickListener {
         chatlist = new ArrayList<ChatMessage>();
         chatAdapter = new ChatAdapter(getActivity(), chatlist);
         msgListView.setAdapter(chatAdapter);
+        context = getContext();
         return view;
     }
 
@@ -132,32 +134,6 @@ public class Chats extends Fragment implements OnClickListener {
                 chatAdapter.add(chatMessage);
                 chatAdapter.notifyDataSetChanged();
 
-
-
-
-
-                long[] pattern = {500,500,500,500};//Titreşim ayarı
-
-                NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(getContext())
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("Gıybet")
-                        .setContentText(message)
-                        .setAutoCancel(true)
-                        .setVibrate(pattern);
-
-                NotificationManager notificationManager =
-                        (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-
-                try {
-                    Uri alarmSound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
-                            + "://" + this.getActivity().getPackageName() + "/raw/notification");
-                    Ringtone r = RingtoneManager.getRingtone(getContext(), alarmSound);
-                    r.play();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
 
 
 

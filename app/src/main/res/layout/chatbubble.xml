@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="2sp"
-    android:layout_marginTop="2sp">
+    android:layout_marginTop="2sp"
+    android:orientation="horizontal"
+    android:weightSum="1">
 
     <LinearLayout
         android:id="@+id/profilePicture"
@@ -22,8 +24,9 @@
 
     <LinearLayout
         android:id="@+id/bubble_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1.15"
         android:background="@drawable/bubble1"
         android:orientation="vertical">
 
@@ -39,6 +42,22 @@
             android:layout_height="wrap_content"
             android:text="Hi! new message"
             android:textColor="@android:color/primary_text_light" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/saatLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/saat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right|center_vertical"
+            android:text="TextView" />
     </LinearLayout>
 
 </LinearLayout>

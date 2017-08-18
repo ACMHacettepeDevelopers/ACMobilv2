@@ -24,11 +24,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.w3c.dom.Text;
 
@@ -108,16 +112,30 @@ public class ChatAdapter extends BaseAdapter {
         if (convertView == null)
             vi = inflater.inflate(R.layout.chatbubble, null);
 
+
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference users = database.child("Giybet").child("Messages");
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        final String userID = auth.getCurrentUser().getUid();
+
+
+
+
         TextView msg = (TextView) vi.findViewById(R.id.message_text);
         msg.setText(message.body);
         LinearLayout layout = (LinearLayout) vi
                 .findViewById(R.id.bubble_layout);
         LinearLayout parent_layout = (LinearLayout) vi
                 .findViewById(R.id.bubble_layout_parent);
-        TextView username =  (TextView) vi.findViewById(R.id.username);
+        final TextView username =  (TextView) vi.findViewById(R.id.username);
         username.setText(message.senderName);
-        LinearLayout pp = (LinearLayout) vi.findViewById(R.id.profilePicture);
-        TextView msgUsername = (TextView) vi.findViewById(R.id.username);
+        ImageView pp = (ImageView) vi.findViewById(R.id.imageView3);
+        TextView clock = (TextView) vi.findViewById(R.id.saat);
+        clock.setText(message.Time);
+
+        Picasso.with(Chats.context).load("https://robohash.org/" + message.senderName + "?set=set2&bgset=bg2&size=96x96").transform(new CircleTransform()).into(pp);
+
+
 
         // if message is mine then align to right
         if (message.IsMe()) {
