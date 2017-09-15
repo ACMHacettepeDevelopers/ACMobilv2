@@ -1,14 +1,19 @@
 package com.acmhacettepe.developers.acmobil;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -51,12 +56,31 @@ public class AddUser extends AppCompatActivity {
                         String lastNumber = snapshot.getValue().toString();
                         final String ogrNumText = ogrNum.getText().toString().trim();
                         addUserNum.setText(ogrNumText);
-                        User user = new User("", lastNumber, false, false);
-                        int acmNum = Integer.valueOf(lastNumber)+1;
-                        mDatabase.child("LastNumber").setValue(acmNum);
-                        addUserAcmNum.setText(String.valueOf(acmNum-1));
-                        mDatabase.child("AddedUsers").child(ogrNumText).setValue(user);
-                        Toast.makeText(AddUser.this, "Üye Başarıyla Eklendi", Toast.LENGTH_LONG).show();
+                        final User user = new User("", lastNumber, false, false);
+                        final int acmNum = Integer.valueOf(lastNumber)+1;
+                        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+                        DatabaseReference users = database.child("AddedUsers");
+                        users.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot snapshot) {
+                                if(!snapshot.hasChild(ogrNumText)){
+                                    mDatabase.child("LastNumber").setValue(acmNum);
+                                    addUserAcmNum.setText(String.valueOf(acmNum-1));
+                                    mDatabase.child("AddedUsers").child(ogrNumText).setValue(user);
+                                    Toast.makeText(AddUser.this, "Üye Başarıyla Eklendi", Toast.LENGTH_LONG).show();
+                                } else{
+                                    Toast.makeText(AddUser.this, "Üye zaten ekli", Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
