@@ -110,25 +110,6 @@ public class MainActivity extends AppCompatActivity
         if(user == null){
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
-        } else {
-            DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-            DatabaseReference users = database.child("Admins");
-            final String mUser1 = auth.getCurrentUser().getUid();
-
-            users.addListenerForSingleValueEvent(new ValueEventListener() {
-                 @Override
-                 public void onDataChange(DataSnapshot snapshot) {
-
-                         if(snapshot.child(mUser1).getValue()!=null){
-                             startActivity(new Intent(MainActivity.this, AdminPanel.class));
-                         }
-                 }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
         }
 
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();

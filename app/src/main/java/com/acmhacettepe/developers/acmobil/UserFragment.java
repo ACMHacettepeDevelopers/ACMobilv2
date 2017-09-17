@@ -113,14 +113,16 @@ public class UserFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 final ImageView pp = (ImageView) _view.findViewById(R.id.profileP);
-                final TextView userName = (TextView) _view.findViewById(R.id.userName);
+                final TextView userName = (TextView) _view.findViewById(R.id.fragmentUser);
+                final TextView userNameGiybet = (TextView) _view.findViewById(R.id.username);
 
                 auth = FirebaseAuth.getInstance();
                 FirebaseUser user = auth.getCurrentUser();
                 if(user!=null){
                     final String User = user.getUid();
 
-                    userName.setText(snapshot.child(User).child("username").getValue().toString());
+                    userName.setText(snapshot.child(User).child("name").getValue().toString());
+                    userNameGiybet.setText(snapshot.child(User).child("username").getValue().toString());
 
                     Picasso.with(getContext()).load("https://robohash.org/" + snapshot.child(User).child("username").getValue()+ "?set=set2&bgset=bg2&size=160x160").transform(new CircleTransform()).into(pp);
 
@@ -139,13 +141,12 @@ public class UserFragment extends Fragment {
             }
         });
 
-        String[] items = {"Kullanıcı Adını Değiştir", "Şifreyi Değiştir"};
+        String[] items = {"Kullanıcı Adını Değiştir", "Şifreyi Değiştir", "İsim Değiştir"};
 
 
 
         ListAdapter userAdapter = new ArrayAdapter<String>(_view.getContext(), android.R.layout.simple_list_item_1, items);
         ListView userList = (ListView) _view.findViewById(R.id.userList);
-        System.out.println(userList);
         userList.setAdapter(userAdapter);
 
 
@@ -171,7 +172,7 @@ public class UserFragment extends Fragment {
                                     }
                                     else {
                                         final String User = auth.getCurrentUser().getUid();
-                                        final TextView userName = (TextView) _view.findViewById(R.id.userName);
+                                        final TextView userName = (TextView) _view.findViewById(R.id.username);
                                         final ImageView pp = (ImageView) _view.findViewById(R.id.profileP);
 
                                         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -190,6 +191,34 @@ public class UserFragment extends Fragment {
                 } else if (position==1){ //Change password
                     Intent intent = new Intent(getActivity(),ResetPasswordActivity.class);
                     startActivity(intent);
+                } else if (position==2){
+                    final EditText input = new EditText(getContext());
+                    AlertDialog.Builder builder;
+                    builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("İsim Giriniz")
+                            .setView(input)
+                            .setPositiveButton("Tamam", new DialogInterface.OnClickListener(){
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    auth = FirebaseAuth.getInstance();
+                                    String text = input.getText().toString();
+
+                                        final String User = auth.getCurrentUser().getUid();
+                                        final TextView userName = (TextView) _view.findViewById(R.id.fragmentUser);
+
+                                        mDatabase = FirebaseDatabase.getInstance().getReference();
+                                        mDatabase.child("RegisteredUsers").child(User).child("name").setValue(text);
+                                        userName.setText(text);
+
+
+
+
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.setCanceledOnTouchOutside(true);
+                    alert.show();
+
                 }
 
 

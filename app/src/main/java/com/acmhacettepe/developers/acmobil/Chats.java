@@ -69,6 +69,7 @@ public class Chats extends Fragment implements OnClickListener {
         msgListView = (ListView) view.findViewById(R.id.msgListView);
         ImageButton sendButton = (ImageButton) view
                 .findViewById(R.id.sendMessageButton);
+        sendButton.setBackgroundResource(R.drawable.send_button);
         sendButton.setOnClickListener(this);
 
         // ----Set autoscroll of listview when a new message arrives----//

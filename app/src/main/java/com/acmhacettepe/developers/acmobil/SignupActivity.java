@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.solver.widgets.Snapshot;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private EditText inputEmail, inputPassword, inputOgrNum, inputUsername, inputUyeNum, inputPassword2;
+    private EditText inputEmail, inputPassword, inputOgrNum, inputUsername, inputUyeNum, inputPassword2, name;
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
@@ -71,6 +72,7 @@ public class SignupActivity extends AppCompatActivity {
         inputUsername = (EditText) findViewById(R.id.username);
         inputUyeNum = (EditText) findViewById(R.id.uyeNum);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        name = (EditText) findViewById(R.id.isim);
 
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +98,7 @@ public class SignupActivity extends AppCompatActivity {
                     users.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
+
                             if (snapshot.child(ogrNum).exists() &&
                                     snapshot.child(ogrNum).child("isRegistered").getValue().equals(false) &&
                                     snapshot.child(ogrNum).child("acmNum").getValue().equals(uyeNum)) {
@@ -136,6 +139,7 @@ public class SignupActivity extends AppCompatActivity {
                                                 mDatabase.child("AddedUsers/").child(ogrNum).child("username").setValue(username);
                                                 mDatabase.child("RegisteredUsers").child(auth.getCurrentUser().getUid()).child("username").setValue(username);
                                                 mDatabase.child("RegisteredUsers").child(auth.getCurrentUser().getUid()).child("acmNum").setValue(uyeNum);
+                                                mDatabase.child("RegisteredUsers").child(auth.getCurrentUser().getUid()).child("name").setValue(name.getText().toString().trim());
                                                 // If sign in fails, display a message to the user. If sign in succeeds
                                                 // the auth state listener will be notified and logic to handle the
                                                 // signed in user can be handled in the listener.

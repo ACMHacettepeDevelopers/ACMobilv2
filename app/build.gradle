@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "com.acmhacettepe.developers.acmobil"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 25
         versionCode 2
         versionName "2.0"

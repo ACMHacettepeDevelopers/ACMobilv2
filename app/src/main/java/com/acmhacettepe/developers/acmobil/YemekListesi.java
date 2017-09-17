@@ -84,7 +84,7 @@ public class YemekListesi extends Fragment  {
                 xpp.setInput(getInputStream(url), "UTF_8");
 
 
-                boolean isCorrectDate = true;
+
 
                 // Returns the type of current event: START_TAG, END_TAG, etc..
                 int eventType = xpp.getEventType();
@@ -99,18 +99,16 @@ public class YemekListesi extends Fragment  {
                             if (Integer.parseInt(date.split("\\.")[0]) >= Integer.parseInt(getCurrentDate().split("\\.")[0])
                                     && Integer.parseInt(date.split("\\.")[1]) >= Integer.parseInt(getCurrentDate().split("\\.")[1])) {
 
-                                isCorrectDate = true;
+
                                 addToList(yemekler, date, null);
                                 dateList.add(date);
                             }
-                            else {
-                                isCorrectDate = false;
-                            }
+
                         }
-                        else if (xpp.getName().equals("yemek" ) && isCorrectDate == true) {
+                        else if (xpp.getName().equals("yemek" )) {
                             addToList(yemekler,date,xpp.nextText());
                         }
-                        else if (xpp.getName().equals("kalori") && isCorrectDate == true) {
+                        else if (xpp.getName().equals("kalori")) {
                             addToList(yemekler,date,xpp.nextText());
                         }
                     }
