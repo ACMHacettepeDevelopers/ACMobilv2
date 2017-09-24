@@ -10,7 +10,6 @@
     android:weightSum="1">
 
     <LinearLayout
-        android:id="@+id/profilePicture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -47,7 +46,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/saatLayout"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="right"

@@ -15,6 +15,7 @@ public class AdminPanel extends AppCompatActivity {
 
     Button addUser;
     Button goToHomePage;
+    Button addEvent;
 
 
 
@@ -39,6 +40,15 @@ public class AdminPanel extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        addEvent = (Button) findViewById(R.id.addEventButton);
+
+        addEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminPanel.this, addEvent.class));
             }
         });
     }

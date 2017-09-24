@@ -1,31 +1,53 @@
 package com.acmhacettepe.developers.acmobil;
 
 import android.content.Context;
+import android.graphics.drawable.Animatable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.imagepipeline.image.ImageInfo;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import me.relex.photodraweeview.OnPhotoTapListener;
+import me.relex.photodraweeview.OnViewTapListener;
+import me.relex.photodraweeview.PhotoDraweeView;
+
+import static android.provider.CalendarContract.CalendarCache.URI;
 
 
 /**
@@ -45,13 +67,11 @@ public class Events extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private DatabaseReference mDatabase;
-    SimpleCursorAdapter mAdapter;
-    ExpandableListAdapter listAdapter;
+    int currentIndex = 1;
+    StorageReference storageRef;
+    ProgressBar progressBar;
 
-    ExpandableListView expListView;
-    List<String> listDataHeader;
-    HashMap<String, List<String>> listDataChild;
+    PhotoDraweeView mPhotoDraweeView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -87,6 +107,7 @@ public class Events extends Fragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -99,47 +120,88 @@ public class Events extends Fragment {
         MainActivity.adminButton.setVisibility(View.GONE);
         MainActivity.mainImage.setVisibility(View.GONE);
         MainActivity.mainText.setVisibility(View.GONE);
+        storageRef = FirebaseStorage.getInstance().getReference();
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBarEvent);
 
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference events = database.child("Events");
-        View RootView = inflater.inflate(R.layout.fragment_events, container, false);
-        final ListView eventList = (ListView) RootView.findViewById(R.id.events_expList);
-
-
+        DatabaseReference events = database.child("Events/EventCount");
 
         events.addListenerForSingleValueEvent(new ValueEventListener() {
 
 
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                ArrayList eventList = new ArrayList<String>();
-
-                // preparing list data
-                listDataHeader = new ArrayList<String>();
-                listDataChild = new HashMap<String, List<String>>();
-
-
-                //Get data and add them to listDataHeader and listDataChild
-                for (DataSnapshot postSnapshot: snapshot.getChildren()){
-                    listDataHeader.add(postSnapshot.getKey());
-                    ArrayList temp = new ArrayList<String>();
-                        for(DataSnapshot sc: postSnapshot.getChildren()){
-                            temp.add(sc.getValue());
+            public void onDataChange(final DataSnapshot snapshot) {
+                mPhotoDraweeView = (PhotoDraweeView) view.findViewById(R.id.events_image);
+                storageRef.child(currentIndex+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        mPhotoDraweeView.setPhotoUri(uri);
+                        progressBar.setVisibility(View.GONE);
                     }
-                    listDataChild.put(postSnapshot.getKey(),temp);
-                }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
 
-                expListView = (ExpandableListView)  view.findViewById(R.id.events_expList);
+                mPhotoDraweeView.setOnPhotoTapListener(new OnPhotoTapListener() {
+                    @Override public void onPhotoTap(View view, float x, float y) {
+                        String eventCount = snapshot.getValue().toString();
+                        progressBar.setVisibility(View.VISIBLE);
+                        mPhotoDraweeView.setVisibility(View.INVISIBLE);
+                        if(Integer.valueOf(eventCount) > currentIndex){
 
-                listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+                            currentIndex += 1;
+                            storageRef.child(currentIndex+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    mPhotoDraweeView.setPhotoUri(uri);
+                                    progressBar.setVisibility(View.GONE);
+                                    mPhotoDraweeView.setVisibility(View.VISIBLE);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Handle any errors
+                                }
+                            });
 
-                // setting list adapter
-                expListView.setAdapter(listAdapter);
+                        } else if(Integer.valueOf(eventCount).equals(currentIndex)){
 
+                            storageRef.child("1.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    mPhotoDraweeView.setPhotoUri(uri);
+                                    progressBar.setVisibility(View.GONE);
+                                    mPhotoDraweeView.setVisibility(View.VISIBLE);
 
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Handle any errors
+                                }
+                            });
+                            currentIndex = 1;
 
+                        } else{
+                            Toast.makeText(view.getContext(), "Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                mPhotoDraweeView.setOnViewTapListener(new OnViewTapListener() {
+                    @Override public void onViewTap(View view, float x, float y) {
 
+                    }
+                });
 
+                mPhotoDraweeView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override public boolean onLongClick(View v) {
+                        Toast.makeText(v.getContext(), "onLongClick", Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                });
 
             }
 
@@ -153,6 +215,13 @@ public class Events extends Fragment {
 
 
         });
+
+
+
+
+
+
+
 
 
         // Inflate the layout for this fragment
