@@ -64,6 +64,9 @@ public class SelectCoordinator extends AppCompatActivity {
                             if(innerMap.values().contains(acmNum.getText().toString())) {
                                 innerMap.put("Koordinatorluk", select_coor.getSelectedItem().toString());
                             }
+                            else{
+                                Toast.makeText(SelectCoordinator.this, "Bu kişi ACMobil kullanmıyor. (Şimdilik :D)", Toast.LENGTH_LONG).show();
+                            }
                         }
                         regUsers.updateChildren((Map)usersMap);
                     }
