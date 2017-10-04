@@ -82,7 +82,8 @@
         <activity
             android:name=".InfoActivity"
             android:label="@string/title_activity_info" />
-        <activity android:name=".addEvent"></activity>
+        <activity android:name=".addEvent" />
+        <activity android:name=".SelectCoordinator"></activity>
     </application>
 
 </manifest>

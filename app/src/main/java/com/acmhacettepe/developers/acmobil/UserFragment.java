@@ -137,7 +137,7 @@ public class UserFragment extends Fragment {
             }
         });
 
-        String[] items = {"Kullanıcı Adını Değiştir", "Şifreyi Değiştir", "İsim Değiştir"};
+        String[] items = {"Kullanıcı Adını Değiştir", "Şifreyi Değiştir", "İsim Değiştir", "Koordinatörlüğünü Seç"};
 
 
 
@@ -216,6 +216,7 @@ public class UserFragment extends Fragment {
                     alert.show();
 
                 }
+
 
 
             }

@@ -109,7 +109,7 @@ public class YemekListesi extends Fragment  {
                             addToList(yemekler,date,xpp.nextText());
                         }
                         else if (xpp.getName().equals("kalori")) {
-                            addToList(yemekler,date,xpp.nextText());
+                            addToList(yemekler,date,"Kalori: "+xpp.nextText());
                         }
                     }
 

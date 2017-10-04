@@ -33,6 +33,13 @@
             android:layout_weight="1"
             android:text="Ana Ekrana Git" />
 
+        <Button
+            android:id="@+id/koor_sec"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="Koordinatörlüğe Yerleştir" />
+
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
