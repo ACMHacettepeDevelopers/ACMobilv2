@@ -1,6 +1,7 @@
 package com.acmhacettepe.developers.acmobil;
 
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -64,11 +67,19 @@ public class SelectCoordinator extends AppCompatActivity {
                             if(innerMap.values().contains(acmNum.getText().toString())) {
                                 innerMap.put("Koordinatorluk", select_coor.getSelectedItem().toString());
                             }
-                            else{
-                                Toast.makeText(SelectCoordinator.this, "Bu kişi ACMobil kullanmıyor. (Şimdilik :D)", Toast.LENGTH_LONG).show();
-                            }
+
                         }
-                        regUsers.updateChildren((Map)usersMap);
+                        regUsers.updateChildren((Map)usersMap).addOnCompleteListener(new OnCompleteListener() {
+                            @Override
+                            public void onComplete(@NonNull Task task) {
+                                if(task.isSuccessful()) {
+                                    Toast.makeText(SelectCoordinator.this,"Uye secilen koordinatorluge basariyla yerlestirildi.",Toast.LENGTH_LONG).show();
+                                }
+                                else {
+                                    Toast.makeText(SelectCoordinator.this,"ERROR! Kod patladı veya net gg. Gökberke ya da Ouza ulasin :D",Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
