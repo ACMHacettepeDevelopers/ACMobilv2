@@ -137,7 +137,7 @@ public class UserFragment extends Fragment {
             }
         });
 
-        String[] items = {"Kullanıcı Adını Değiştir", "Şifreyi Değiştir", "İsim Değiştir", "Koordinatörlüğünü Seç"};
+        String[] items = {"Kullanıcı Adını Değiştir", "Şifreyi Değiştir", "İsim Değiştir"};
 
 
 
@@ -187,7 +187,7 @@ public class UserFragment extends Fragment {
                 } else if (position==1){ //Change password
                     Intent intent = new Intent(getActivity(),ResetPasswordActivity.class);
                     startActivity(intent);
-                } else if (position==2){
+                } else if (position==2){ //Change coord.
                     final EditText input = new EditText(getContext());
                     AlertDialog.Builder builder;
                     builder = new AlertDialog.Builder(getContext());

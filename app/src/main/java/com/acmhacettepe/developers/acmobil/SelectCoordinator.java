@@ -60,26 +60,20 @@ public class SelectCoordinator extends AppCompatActivity {
 
                         HashMap<String, HashMap<String,String>> usersMap = ((HashMap<String,HashMap<String,String>>) dataSnapshot.getValue());
                         Iterator itrOuter = usersMap.values().iterator();
+                        boolean found = false;
                         while(itrOuter.hasNext()) {
 
                             HashMap<String,String> innerMap = (HashMap<String,String>) itrOuter.next();
 
                             if(innerMap.values().contains(acmNum.getText().toString())) {
                                 innerMap.put("Koordinatorluk", select_coor.getSelectedItem().toString());
+                                Toast.makeText(SelectCoordinator.this,"Üye seçilen koordinatörlüğe başarıyla yerleştirildi.",Toast.LENGTH_LONG).show();
+                                found = true;
+                                break;
                             }
-
                         }
-                        regUsers.updateChildren((Map)usersMap).addOnCompleteListener(new OnCompleteListener() {
-                            @Override
-                            public void onComplete(@NonNull Task task) {
-                                if(task.isSuccessful()) {
-                                    Toast.makeText(SelectCoordinator.this,"Uye secilen koordinatorluge basariyla yerlestirildi.",Toast.LENGTH_LONG).show();
-                                }
-                                else {
-                                    Toast.makeText(SelectCoordinator.this,"ERROR! Kod patladı veya net gg. Gökberke ya da Ouza ulasin :D",Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
+                        if(!found) Toast.makeText(SelectCoordinator.this,"Verilen Acm numarasında üye bulunamadı",Toast.LENGTH_LONG).show();
+                        regUsers.updateChildren((Map)usersMap);
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {

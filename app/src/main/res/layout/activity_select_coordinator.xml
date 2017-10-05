@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="ACM numarasını giriniz..."
-            android:inputType="textPersonName"
+            android:inputType="number"
             android:textColorHint="@android:color/darker_gray" />
 
         <Spinner
