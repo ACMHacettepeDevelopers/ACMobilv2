@@ -45,7 +45,7 @@ public class SelectCoordinator extends AppCompatActivity {
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         select_coor.setAdapter(myAdapter);
 
-        regUsers = FirebaseDatabase.getInstance().getReference().child("RegisteredUsers");
+        regUsers = FirebaseDatabase.getInstance().getReference().child("AddedUsers");
 
         acmNum = (EditText) findViewById(R.id.acmNum);
 
@@ -54,7 +54,7 @@ public class SelectCoordinator extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                regUsers.addValueEventListener(new ValueEventListener() {
+                regUsers.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
