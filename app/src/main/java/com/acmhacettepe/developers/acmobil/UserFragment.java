@@ -187,7 +187,7 @@ public class UserFragment extends Fragment {
                 } else if (position==1){ //Change password
                     Intent intent = new Intent(getActivity(),ResetPasswordActivity.class);
                     startActivity(intent);
-                } else if (position==2){ //Change coord.
+                } else if (position==2){
                     final EditText input = new EditText(getContext());
                     AlertDialog.Builder builder;
                     builder = new AlertDialog.Builder(getContext());
