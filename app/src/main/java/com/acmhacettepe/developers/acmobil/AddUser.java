@@ -69,7 +69,8 @@ public class AddUser extends AppCompatActivity {
                                     mDatabase.child("AddedUsers").child(ogrNumText).setValue(user);
                                     Toast.makeText(AddUser.this, "Üye Başarıyla Eklendi", Toast.LENGTH_LONG).show();
                                 } else{
-                                    Toast.makeText(AddUser.this, "Üye zaten ekli", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(AddUser.this, "Üye zaten ekli Acm numarası kısmına numarası yazıldı", Toast.LENGTH_LONG).show();
+                                    addUserAcmNum.setText(snapshot.child(ogrNumText).child("acmNum").getValue().toString());
                                 }
                             }
 

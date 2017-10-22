@@ -9,30 +9,27 @@
 
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
 
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_gravity="center|bottom"
-            android:layout_marginBottom="20dp"
-            android:visibility="gone" />
-
         <TextView
-            android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Bu Bölümden Topluluğumuzdaki Etkinlikleri Takip Edebilirsiniz" />
+            android:text="Bu Bölümden Topluluğumuzdaki Etkinlikleri Takip Edebilirsiniz. Resimlere 1 kere tıklayarak etkinlikleri gezebilirsiniz." />
 
-        <ExpandableListView
-            android:id="@+id/events_expList"
+        <ProgressBar
+            android:id="@+id/progressBarEvent"
+            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <me.relex.photodraweeview.PhotoDraweeView
+            android:id="@+id/events_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

@@ -5,24 +5,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Ayarlar</string>
-    <string name="action_info">Hakkında</string>
-    <string name="title_activity_yemek_listesi">YemekListesi</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_info">Info</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
     <!--End of related to Login-->
 
     <!-- Login -->
@@ -32,28 +19,15 @@
     <string name="enterPw">Lütfen geçerli bir şifre giriniz.</string>
     <string name="minimum_password">Şifreniz çok kısa. Minimum 6 karakterli şifre giriniz.</string>
     <string name="auth_failed">Giriş başarısız. Lütfen şifre veya mailinizi kontrol ediniz.</string>
-    <string name="change_email">Email Değiştir</string>
-    <string name="change_password">Şifre Değiştir</string>
-    <string name="send_password_reset_email">Şifre değişim maili, mail hesabınıza yollandı.</string>
-    <string name="remove_user">Üye Sil</string>
-    <string name="new_pass">Yeni Şifre</string>
-    <string name="title_activity_profile">Firebase</string>
     <string name="title_activity_login">Giriş Yap</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Şifre</string>
-    <string name="hint_name">Tam isim</string>
     <string name="btn_login">Giriş Yap</string>
     <string name="btn_link_to_register">Üye değil misiniz? Gelin üye olalım.</string>
-    <string name="btn_link_to_login">Üye oldunuz mu? Gelin giriş yapalım.</string>
     <string name="title_activity_reset_password">Şifre Değiştir</string>
     <string name="btn_forgot_password">Şifremi unuttum</string>
     <string name="btn_reset_password">Şifre değiştir</string>
     <string name="btn_back"><![CDATA[<< Geri]]></string>
-    <string name="hint_new_email">Yeni mail</string>
-    <string name="btn_change">Değiştir</string>
-    <string name="btn_send">Yolla</string>
-    <string name="btn_remove">Sil</string>
-    <string name="btn_sign_out">Çıkış Yap</string>
     <string name="lbl_forgot_password">Şifremi unuttum</string>
     <string name="forgot_password_msg">Şifrenizi değiştirmek için mail adresinizi giriniz.</string>
     <string name="title_activity_signup">Üye Ol</string>
@@ -65,7 +39,6 @@
     <!-- End of Login -->
 
     <!-- Signup -->
-    <string name="ogr_num_not_in_db">Lütfen geçerli bir öğrenci numarası giriniz</string>
 
     <string-array name="mekanlar_array">
         <item>Kız Öğrenci Yurdu</item>
@@ -167,20 +140,6 @@
         <item>-1</item>
     </string-array>
 
-    <string-array name="list_preference_entries">
-        <item>Entry 1</item>
-        <item>Entry 2</item>
-        <item>Entry 3</item>
-    </string-array>
-
-    <string-array name="list_preference_entry_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
-
-    <string-array name="multi_select_list_preference_default_value" />
-
     <string name="pref_title_system_sync_settings">System sync settings</string>
 
     <!-- Example settings for Notifications -->
@@ -192,4 +151,14 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+
+    <!-- Coordinator Names -->
+    
+    <string-array name="coor_names">
+        <item>Teknik Etkinlik Koordinatörlüğü</item>
+        <item>Reklam ve Tanıtım Koordinatörlüğü</item>
+        <item>Kurumsal İlişkiler Koordinatörlüğü</item>
+        <item>Halkla İlişkiler Koordinatörlüğü</item>
+        <item>Sosyal Etkinlik Koordinatörlüğü</item>
+    </string-array>
 </resources>
