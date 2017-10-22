@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "951260851255",
+    "firebase_url": "https://acmobilv2.firebaseio.com",
+    "project_id": "acmobilv2",
+    "storage_bucket": "acmobilv2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:951260851255:android:8c61a6dd19272540",
+        "android_client_info": {
+          "package_name": "com.acmhacettepe.developers.acmobil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "951260851255-meb591h3gn0s794764d622f9b33q7k7e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.acmhacettepe.developers.acmobil",
+            "certificate_hash": "aa419d7024f2b40fc73601a5a370ef6e9a3d4de8"
+          }
+        },
+        {
+          "client_id": "951260851255-50e21hqrm62srfg2su3he15543l6mehv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtEAtipOjEOST5Av4qIKEMCmlGiCh02RQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "951260851255-50e21hqrm62srfg2su3he15543l6mehv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
