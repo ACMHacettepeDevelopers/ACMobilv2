@@ -17,9 +17,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -81,22 +83,16 @@ public class YemekActivity extends AppCompatActivity {
                         if (xpp.getName().equals("tarih")) {
 
                             date = xpp.nextText();
-                            if (Integer.parseInt(date.split("\\.")[0]) >= Integer.parseInt(getCurrentDate().split("\\.")[0])
-                                    && Integer.parseInt(date.split("\\.")[1]) >= Integer.parseInt(getCurrentDate().split("\\.")[1])) {
-
-                                isCorrectDate = true;
+                            if (compareDatetoToday(date.split("\\s+")[0])) { // check if date is after today
                                 addToList(yemekler, date, null);
                                 dateList.add(date);
                             }
-                            else {
-                                isCorrectDate = false;
-                            }
                         }
-                        else if (xpp.getName().equals("yemek" ) && isCorrectDate == true) {
+                        else if (xpp.getName().equals("yemek" )) {
                             addToList(yemekler,date,xpp.nextText());
                         }
-                        else if (xpp.getName().equals("kalori") && isCorrectDate == true) {
-                            addToList(yemekler,date,xpp.nextText());
+                        else if (xpp.getName().equals("kalori")) {
+                            addToList(yemekler,date,"Kalori: " + xpp.nextText());
                         }
                     }
 
@@ -143,5 +139,22 @@ public class YemekActivity extends AppCompatActivity {
                 map.get(key).add(item); //adds value to list
             }
         }
+    }
+
+    public boolean compareDatetoToday (String date) {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        try {
+            Date comparedDate = formatter.parse(date);
+            Date today = formatter.parse(getCurrentDate());
+
+            if (today.compareTo(comparedDate) < 0 || date.equals(getCurrentDate())) {
+                return true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+
     }
 }

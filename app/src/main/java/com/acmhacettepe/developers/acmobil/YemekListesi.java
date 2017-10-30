@@ -19,9 +19,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -48,7 +50,7 @@ public class YemekListesi extends Fragment  {
 
         expandableListView = (ExpandableListView) view.findViewById(R.id.yemekExpList);
 
-        if (checkConnection(getContext()) == true) {
+        if (checkConnection(getContext())) {
             new GetData().execute(); // Executing asynctask if there is network connection.
         }
         else
@@ -57,13 +59,13 @@ public class YemekListesi extends Fragment  {
         return view;
     }
 
-    class GetData extends AsyncTask<Void, Void, HashMap<String, List<String>> > {
+    private class GetData extends AsyncTask<Void, Void, HashMap<String, List<String>> > {
 
         URL url;
         List<String> dateList = new ArrayList<>() ;
         HashMap<String, List<String>> yemekler = new HashMap<>();
 
-        public InputStream getInputStream(URL url) {
+        private InputStream getInputStream(URL url) {
             try {
                 return url.openConnection().getInputStream();
             } catch (IOException e) {
@@ -83,9 +85,6 @@ public class YemekListesi extends Fragment  {
                 // We will get the XML from an input stream
                 xpp.setInput(getInputStream(url), "UTF_8");
 
-
-
-
                 // Returns the type of current event: START_TAG, END_TAG, etc..
                 int eventType = xpp.getEventType();
                 String date = null;
@@ -96,20 +95,16 @@ public class YemekListesi extends Fragment  {
                         if (xpp.getName().equals("tarih")) {
 
                             date = xpp.nextText();
-                            if (Integer.parseInt(date.split("\\.")[0]) >= Integer.parseInt(getCurrentDate().split("\\.")[0])
-                                    && Integer.parseInt(date.split("\\.")[1]) >= Integer.parseInt(getCurrentDate().split("\\.")[1])) {
-
-
+                            if (compareDatetoToday(date.split("\\s+")[0])) { // check if date is after today or its today
                                 addToList(yemekler, date, null);
                                 dateList.add(date);
                             }
-
                         }
                         else if (xpp.getName().equals("yemek" )) {
                             addToList(yemekler,date,xpp.nextText());
                         }
                         else if (xpp.getName().equals("kalori")) {
-                            addToList(yemekler,date,"Kalori: "+xpp.nextText());
+                            addToList(yemekler,date,"Kalori: " + xpp.nextText());
                         }
                     }
 
@@ -157,6 +152,26 @@ public class YemekListesi extends Fragment  {
             }
         }
         }
+
+    // This method takes a date and returns true if date is after today or its today, returns false if not
+    public boolean compareDatetoToday (String date) {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        try {
+            Date comparedDate = formatter.parse(date);
+            Date today = formatter.parse(getCurrentDate());
+
+            if (today.compareTo(comparedDate) < 0 || getCurrentDate().equals(date)) {
+                return true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+
     }
+    }
+
+
 
 
