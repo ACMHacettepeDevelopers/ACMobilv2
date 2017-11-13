@@ -33,17 +33,48 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        zXingScannerView = new ZXingScannerView(this);
-        setContentView(zXingScannerView);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(checkPermission()) {
-                Toast.makeText(QrScannerActivity.this, "Permission is granted!", Toast.LENGTH_LONG).show();
-            }
-            else {
-                requestPermission();
+
+        final int MY_PERMISSIONS_REQUEST_CAMERA = 99;
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.CAMERA)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+                new android.support.v7.app.AlertDialog.Builder(this)
+                        .setTitle("Location Permission Needed")
+                        .setMessage("This app needs the Location permission, please accept to use location functionality")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //Prompt the user once explanation has been shown
+                                ActivityCompat.requestPermissions(QrScannerActivity.this,
+                                        new String[]{Manifest.permission.CAMERA},
+                                        MY_PERMISSIONS_REQUEST_CAMERA );
+                            }
+                        })
+                        .create()
+                        .show();
+
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CAMERA},
+                        MY_PERMISSIONS_REQUEST_CAMERA );
             }
         }
+        zXingScannerView = new ZXingScannerView(this);
+        setContentView(zXingScannerView);
+        zXingScannerView.setResultHandler(QrScannerActivity.this);
+        zXingScannerView.startCamera();
+
+
     }
 
     private boolean checkPermission() {
