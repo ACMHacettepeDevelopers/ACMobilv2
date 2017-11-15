@@ -79,7 +79,7 @@ public class AdminPanel extends AppCompatActivity {
         qr_scanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AdminPanel.this, QrScannerActivity.class));
+                startActivity(new Intent(AdminPanel.this, QrScannerAdminActivity.class));
             }
         });
 
