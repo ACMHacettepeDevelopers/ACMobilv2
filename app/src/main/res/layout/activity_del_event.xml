@@ -9,7 +9,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:orientation="vertical"
         tools:context="com.acmhacettepe.developers.acmobil.addEvent"
         tools:layout_editor_absoluteY="8dp"
