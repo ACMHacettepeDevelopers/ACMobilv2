@@ -4,13 +4,16 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -24,6 +27,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class addEvent extends AppCompatActivity {
@@ -34,6 +39,7 @@ public class addEvent extends AppCompatActivity {
     private ProgressDialog pd;
     private int eventCount;
     private DatabaseReference mDatabase;
+    private TextView eventName;
 
     //creating reference to firebase storage
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -55,6 +61,7 @@ public class addEvent extends AppCompatActivity {
 
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         DatabaseReference events = database.child("Events/EventCount");
+        final DatabaseReference eventL = database.child("Events").child("EventNames");
 
         events.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -98,6 +105,15 @@ public class addEvent extends AppCompatActivity {
                     uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            //upload event class to database
+                            Map<String, Object> map = new HashMap<String, Object>();
+                            eventName = (EditText) findViewById(R.id.EventName);
+                            Event object = new Event(eventName.getText().toString(), String.valueOf(eventCount));
+                            map.put("event", object);
+                            DatabaseReference eventRoot = eventL.child(String.valueOf(eventCount));
+                            eventRoot.updateChildren(map);
+
+
                             pd.dismiss();
                             mDatabase.child("Events/EventCount").setValue(eventCount);
                             Toast.makeText(addEvent.this, "Etkinlik eklendi", Toast.LENGTH_SHORT).show();

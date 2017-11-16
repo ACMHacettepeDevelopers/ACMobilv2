@@ -28,6 +28,7 @@ public class AdminPanel extends AppCompatActivity {
     Button goToHomePage;
     Button addEvent;
     Button select_coor;
+    Button delEvent;
     Button qr_scanner;
 
     @Override
@@ -72,6 +73,14 @@ public class AdminPanel extends AppCompatActivity {
                 startActivity(new Intent(AdminPanel.this, SelectCoordinator.class));
             }
 
+        });
+
+        delEvent = (Button) findViewById(R.id.deleteEventButton);
+        delEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminPanel.this,DelEventActivity.class));
+            }
         });
 
         qr_scanner = (Button) findViewById(R.id.qr_scan);

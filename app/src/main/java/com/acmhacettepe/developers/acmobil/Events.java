@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.CoordinatorLayout;
@@ -31,6 +32,7 @@ import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -67,7 +69,9 @@ public class Events extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    int currentIndex = 1;
+    private ArrayList<String> numbers;
+    int currentIndex = 0;
+    private DatabaseReference root;
     StorageReference storageRef;
     ProgressBar progressBar;
 
@@ -123,16 +127,18 @@ public class Events extends Fragment {
         storageRef = FirebaseStorage.getInstance().getReference();
         progressBar = (ProgressBar) view.findViewById(R.id.progressBarEvent);
 
+        //pull event numbers
+        numbers = new ArrayList<String>();
+        pullNumbers();
+
+
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         DatabaseReference events = database.child("Events/EventCount");
-
         events.addListenerForSingleValueEvent(new ValueEventListener() {
-
-
             @Override
             public void onDataChange(final DataSnapshot snapshot) {
                 mPhotoDraweeView = (PhotoDraweeView) view.findViewById(R.id.events_image);
-                storageRef.child(currentIndex+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                storageRef.child(numbers.get(currentIndex)+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
                         mPhotoDraweeView.setPhotoUri(uri);
@@ -150,10 +156,10 @@ public class Events extends Fragment {
                         String eventCount = snapshot.getValue().toString();
                         progressBar.setVisibility(View.VISIBLE);
                         mPhotoDraweeView.setVisibility(View.INVISIBLE);
-                        if(Integer.valueOf(eventCount) > currentIndex){
+                        if(numbers.size() > currentIndex + 1){
 
                             currentIndex += 1;
-                            storageRef.child(currentIndex+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            storageRef.child(numbers.get(currentIndex)+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     mPhotoDraweeView.setPhotoUri(uri);
@@ -167,9 +173,9 @@ public class Events extends Fragment {
                                 }
                             });
 
-                        } else if(Integer.valueOf(eventCount).equals(currentIndex)){
+                        } else if(numbers.size() == currentIndex + 1){
 
-                            storageRef.child("1.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            storageRef.child(numbers.get(0)+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     mPhotoDraweeView.setPhotoUri(uri);
@@ -183,7 +189,7 @@ public class Events extends Fragment {
                                     // Handle any errors
                                 }
                             });
-                            currentIndex = 1;
+                            currentIndex = 0;
 
                         } else{
                             Toast.makeText(view.getContext(), "Error", Toast.LENGTH_SHORT).show();
@@ -224,6 +230,8 @@ public class Events extends Fragment {
 
 
 
+
+
         // Inflate the layout for this fragment
         return view;
 
@@ -253,6 +261,41 @@ public class Events extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    private void pullNumbers(){
+        root = FirebaseDatabase.getInstance().getReference().child("Events").child("EventNames");
+        root.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                DataSnapshot i = dataSnapshot.getChildren().iterator().next();
+                String number = ((HashMap)(i).getValue()).get("number").toString();
+                System.out.println("LAN BEN BURDAYIM GISPNBGSFGSFGSSSSSSSSSSSSS");
+                System.out.println(number);
+                numbers.add(number);
+                System.out.println(numbers.get(0));
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 

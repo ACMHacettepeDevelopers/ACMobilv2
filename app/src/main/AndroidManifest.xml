@@ -86,6 +86,7 @@
             android:label="@string/title_activity_info" />
         <activity android:name=".addEvent" />
         <activity android:name=".SelectCoordinator" />
+        <activity android:name=".DelEventActivity"/>
         <activity android:name=".QrScannerActivity" />
         <activity android:name=".QrScannerAdminActivity"></activity>
     </application>
