@@ -7,8 +7,8 @@ android {
         applicationId "com.acmhacettepe.developers.acmobil"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 7
-        versionName "2.2.1"
+        versionCode 8
+        versionName "2.2.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
