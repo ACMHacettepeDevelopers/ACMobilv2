@@ -27,6 +27,13 @@
             android:text="Etkinlik Ekle" />
 
         <Button
+            android:id="@+id/deleteEventButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="Etkinlik Sil" />
+
+        <Button
             android:id="@+id/home_screen"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -39,6 +46,13 @@
             android:layout_height="60dp"
             android:layout_weight="1"
             android:text="Koordinatörlüğe Yerleştir" />
+
+        <Button
+            android:id="@+id/qr_scan"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="QR Scanner" />
 
     </LinearLayout>
 

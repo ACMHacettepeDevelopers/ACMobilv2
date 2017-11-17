@@ -245,6 +245,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
 
+        } else if (id == R.id.qr_scanner_icon) {
+            startActivity(new Intent(MainActivity.this, QrScannerActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

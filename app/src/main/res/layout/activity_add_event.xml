@@ -18,6 +18,16 @@
             android:layout_height="60dp"
             android:text="Resim Seç" />
 
+        <EditText
+            android:id="@+id/EventName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="Etkinlik ismi"
+            android:inputType="textEmailAddress"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/black" />
+
         <Button
             android:id="@+id/uploadImg"
             android:layout_width="match_parent"

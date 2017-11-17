@@ -153,7 +153,7 @@
     <string name="pref_title_vibrate">Vibrate</string>
 
     <!-- Coordinator Names -->
-    
+
     <string-array name="coor_names">
         <item>Teknik Etkinlik Koordinatörlüğü</item>
         <item>Reklam ve Tanıtım Koordinatörlüğü</item>
