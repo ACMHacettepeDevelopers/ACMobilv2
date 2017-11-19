@@ -37,6 +37,10 @@ public class LoginActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,11 +137,12 @@ public class LoginActivity extends AppCompatActivity {
                 String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
 
+                //checking email text is filled
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext(), R.string.enterEmail, Toast.LENGTH_SHORT).show();
                     return;
                 }
-
+                //checking password text is filled
                 if (TextUtils.isEmpty(password)) {
                     Toast.makeText(getApplicationContext(), R.string.enterPw, Toast.LENGTH_SHORT).show();
                     return;

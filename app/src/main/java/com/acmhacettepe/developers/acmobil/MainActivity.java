@@ -30,6 +30,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+
+
+//Our project is begining here
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener , Chats.OnFragmentInteractionListener, MapFragment.OnFragmentInteractionListener, Events.OnFragmentInteractionListener, UserFragment.OnFragmentInteractionListener {
 
@@ -42,9 +45,10 @@ public class MainActivity extends AppCompatActivity
     public static ImageView mainImage;
 
 
-
-
-
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,9 +114,11 @@ public class MainActivity extends AppCompatActivity
 
 
         if(user == null){
+            //if there is not this user in database , program will directed login menu
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
         }
+
 
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         DatabaseReference admin = db.child("Admins");
@@ -137,6 +143,8 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+
+        //admin layout different from normal users
         adminButton = (Button) findViewById(R.id.adminPaneli);
         mainText = (TextView) findViewById(R.id.textView4);
         mainImage = (ImageView) findViewById(R.id.imageView2);
@@ -160,6 +168,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        //when pressing back button from your phone, this state will start.
+        //going layout of previous activity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -168,6 +178,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     *
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -175,13 +190,17 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
 
 
         //noinspection SimplifiableIfStatement
@@ -194,9 +213,11 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
-
-
+    /**
+     *
+     * @param item
+     * @return
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

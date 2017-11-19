@@ -34,6 +34,11 @@ public class DelEventActivity extends AppCompatActivity {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
 
+    /**
+     *Delete Page Layout
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,11 +93,17 @@ public class DelEventActivity extends AppCompatActivity {
                 String eventNumber = eventName.getText().toString();
                 boolean isfound =false;
                 for (int i=0; i<numbers.size();++i){
+                    //search event that is entered
                     if(eventNumber.equals(numbers.get(i))){
                         isfound = true;
                         break;
                     }
                 }
+
+                //if there is a event we seeked,it will delete.Then message will appear on screeon.
+                //"Event is deleted successfully"
+                // There is not.
+                // "Event is not deleted.Please check number of event"
                 if(isfound){
                     root.child(eventNumber).setValue(null);
                     Toast.makeText(DelEventActivity.this, "Etkinlik başarıyla silindi", Toast.LENGTH_SHORT).show();

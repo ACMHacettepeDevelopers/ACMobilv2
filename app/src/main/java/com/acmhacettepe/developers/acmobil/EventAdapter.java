@@ -23,6 +23,9 @@ public class EventAdapter extends BaseAdapter{
     ArrayList<String> chatMessageList = new ArrayList<String>();
     private DatabaseReference root;
 
+    /**
+     * Add new event
+     */
     public EventAdapter(){
         root = FirebaseDatabase.getInstance().getReference().child("Events").child("EventNames");
         root.addChildEventListener(new ChildEventListener() {
@@ -63,16 +66,33 @@ public class EventAdapter extends BaseAdapter{
         return 0;
     }
 
+    /**
+     *
+     * @param position
+     * @return
+     */
     @Override
     public Object getItem(int position) {
         return null;
     }
 
+    /**
+     *
+     * @param position
+     * @return
+     */
     @Override
     public long getItemId(int position) {
         return 0;
     }
 
+    /**
+     *
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         return null;

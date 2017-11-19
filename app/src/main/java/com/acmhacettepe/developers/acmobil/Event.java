@@ -11,7 +11,11 @@ public class Event {
     public String number;
     private static FirebaseAuth auth = FirebaseAuth.getInstance();
 
-
+    /**
+     *
+     * @param eventName
+     * @param number
+     */
     public Event(String eventName,String number){
         auth = FirebaseAuth.getInstance();
         this.eventName = eventName;

@@ -101,6 +101,10 @@ public class Events extends Fragment {
         return fragment;
     }
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +115,13 @@ public class Events extends Fragment {
         }
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -131,12 +142,13 @@ public class Events extends Fragment {
         numbers = new ArrayList<String>();
         pullNumbers();
 
-
+        //connect database
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         DatabaseReference events = database.child("Events/EventCount");
         events.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot snapshot) {
+                //show photos about event
                 mPhotoDraweeView = (PhotoDraweeView) view.findViewById(R.id.events_image);
                 storageRef.child(numbers.get(currentIndex)+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
@@ -223,21 +235,16 @@ public class Events extends Fragment {
         });
 
 
-
-
-
-
-
-
-
-
-
         // Inflate the layout for this fragment
         return view;
 
 
     }
 
+    /**
+     *
+     * @param uri
+     */
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -245,6 +252,10 @@ public class Events extends Fragment {
         }
     }
 
+    /**
+     *
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -256,6 +267,7 @@ public class Events extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
 
     @Override
     public void onDetach() {
