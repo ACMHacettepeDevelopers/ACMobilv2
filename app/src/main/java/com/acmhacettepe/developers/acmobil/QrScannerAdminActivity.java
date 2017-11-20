@@ -33,6 +33,7 @@ public class QrScannerAdminActivity extends AppCompatActivity implements ZXingSc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Settingg up the path for database Reference.
         qrRegisteredEvents = FirebaseDatabase.getInstance().getReference().child("QrRegisteredEvents");
 
         final int MY_PERMISSIONS_REQUEST_CAMERA = 99;
@@ -99,6 +100,13 @@ public class QrScannerAdminActivity extends AppCompatActivity implements ZXingSc
         }
     }
 
+    // Continue using camera.
+    @Override
+    protected void onResume() {
+        super.onResume();
+        zXingScannerView.resumeCameraPreview(QrScannerAdminActivity.this);
+    }
+
     // Stop the camera when activity is destroyed.
     @Override
     protected void onDestroy() {
@@ -112,7 +120,7 @@ public class QrScannerAdminActivity extends AppCompatActivity implements ZXingSc
     public void handleResult(Result result) {
         //Handling the scan result.
 
-        final String scanResult = result.getText();
+        final String scanResult = result.getText(); // Get text of the QR code.
         AlertDialog.Builder builder = new AlertDialog.Builder(QrScannerAdminActivity.this);
         builder.setTitle(scanResult + "yeni etkinlik olarak ekle?");
 

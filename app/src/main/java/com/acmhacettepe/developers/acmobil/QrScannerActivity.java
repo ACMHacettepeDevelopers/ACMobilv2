@@ -41,7 +41,7 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
         super.onCreate(savedInstanceState);
 
 
-
+        // Setting up paths for database references.
         qrRegEvents = FirebaseDatabase.getInstance().getReference().child("QrRegisteredEvents");
 
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -111,12 +111,12 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
 
         } else {
             // permission denied, boo! Disable the functionality that depends on this permission.
-            Toast.makeText(QrScannerActivity.this, "Kamera için izin vermediğiniz sürece bu özelliği kullanamazsınız!",
+            Toast.makeText(QrScannerActivity.this,
+                    "Kamera için izin vermediğiniz sürece bu özelliği kullanamazsınız!",
                     Toast.LENGTH_LONG).show();
             finish();
         }
     }
-
 
 
     @Override
@@ -126,22 +126,33 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
         zXingScannerView.stopCamera();
     }
 
+    // Continue using camera.
+    @Override
+    protected void onResume() {
+        super.onResume();
+        zXingScannerView.resumeCameraPreview(QrScannerActivity.this);
+    }
 
+
+    // Looks like a mess but couldn't find another way to do it. Read comments below to understand.
     @Override
     public void handleResult(Result result) {
         //Handling the scan result.
 
-        final String scanResult = result.getText();
+        final String scanResult = result.getText(); // Getting the text of the QR code.
 
+        // We first check the if such a event exists or not.
         qrRegEvents.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChild(scanResult)) {
+            public void onDataChange(DataSnapshot qrDataSnapshot) {
+
+                // If event exists in the qrRegisteredEvents listen the registeredUsers and write the necessary data.
+                if(qrDataSnapshot.hasChild(scanResult)) {
 
                     regdUser.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(final DataSnapshot dataSnapshot) {
-
+                            // If user hasn't already participated the event add the event name.
                             if (!dataSnapshot.child("participatedEvents").hasChild(scanResult)) {
 
                                 regdUser.child("participatedEvents").child(scanResult).setValue("1")
@@ -175,13 +186,14 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
                                 });
 
                             }
+                            // If user already participated prevent doubling eventCount and inform the user.
                             else {
                                 Toast.makeText(QrScannerActivity.this, "Bu etkinliğe zaten katıldınız!",
                                         Toast.LENGTH_SHORT).show();
                                 finish();
                             }
                         }
-
+                        // Handling database error.
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
 
@@ -192,13 +204,14 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
                         }
                     });
                 }
+                // If doesn't exist make a toast to inform the user.
                 else {
                     Toast.makeText(QrScannerActivity.this, "Böyle bir etkinliğimiz yok!",
                             Toast.LENGTH_LONG).show();
                     finish();
                 }
             }
-
+            // Handling database error.
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(QrScannerActivity.this,
