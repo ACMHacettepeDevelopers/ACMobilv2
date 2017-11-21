@@ -9,10 +9,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
-        tools:context="com.acmhacettepe.developers.acmobil.addEvent"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context="com.acmhacettepe.developers.acmobil.addEvent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:hint="Etkinlik Numarası"
+                android:hint="@string/etkinlik_numaras"
                 android:inputType="textEmailAddress"
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/black" />
@@ -38,7 +41,7 @@
                 android:id="@+id/delEvent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Etkinliği Sil" />
+                android:text="@string/etkinli_i_sil" />
         </LinearLayout>
 
     </LinearLayout>
