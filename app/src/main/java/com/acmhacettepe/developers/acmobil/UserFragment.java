@@ -31,6 +31,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 
@@ -98,7 +100,7 @@ public class UserFragment extends Fragment {
 
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference registeredUsers = db.child("RegisteredUsers");
-
+        registeredUsers.keepSynced(true); // See Firebase Offline Capabilities.
 
         //Remove admin panel button
         MainActivity.adminButton.setVisibility(View.GONE);
@@ -107,7 +109,7 @@ public class UserFragment extends Fragment {
 
         registeredUsers.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(final DataSnapshot snapshot) {
                 final ImageView pp = (ImageView) _view.findViewById(R.id.profileP);
                 final TextView userName = (TextView) _view.findViewById(R.id.fragmentUser);
                 final TextView userNameGiybet = (TextView) _view.findViewById(R.id.username);
@@ -120,15 +122,30 @@ public class UserFragment extends Fragment {
                     userName.setText(snapshot.child(User).child("name").getValue().toString());
                     userNameGiybet.setText(snapshot.child(User).child("username").getValue().toString());
 
-                    Picasso.with(getContext()).load("https://robohash.org/" + snapshot.child(User).child("username").getValue()+ "?set=set2&bgset=bg2&size=160x160").transform(new CircleTransform()).into(pp);
+                    Picasso.with(getContext()).load("https://robohash.org/"
+                            + snapshot.child(User)
+                            .child("username")
+                            .getValue()+ "?set=set2&bgset=bg2&size=160x160")
+                            .transform(new CircleTransform())
+                            .networkPolicy(NetworkPolicy.OFFLINE)
+                            .into(pp, new Callback() {
+                                @Override
+                                public void onSuccess() {
 
-                } else{
+                                }
+
+                                @Override
+                                public void onError() {
+                                    Picasso.with(getContext()).load("https://robohash.org/"
+                                            + snapshot.child(User)
+                                            .child("username")
+                                            .getValue()+ "?set=set2&bgset=bg2&size=160x160")
+                                            .transform(new CircleTransform())
+                                            .into(pp);
+                                }
+                            });
 
                 }
-
-
-
-
             }
 
             @Override
