@@ -25,8 +25,9 @@ public class AddUser extends AppCompatActivity {
     private FirebaseAuth auth;
     private DatabaseReference mDatabase;
     Button button;
-    private EditText ogrNum;
+    private EditText ogrNum, ogrName;
     private TextView addUserNum, addUserAcmNum;
+
 
 
     @Override
@@ -38,6 +39,7 @@ public class AddUser extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         ogrNum = (EditText) findViewById(R.id.ogrNumSignUp);
+        ogrName = (EditText) findViewById(R.id.ogrName);
         addUserNum = (TextView) findViewById(R.id.addUserNumber);
         addUserAcmNum = (TextView) findViewById(R.id.addUserAcmNumber);
 
@@ -55,6 +57,7 @@ public class AddUser extends AppCompatActivity {
                     public void onDataChange(DataSnapshot snapshot) {
                         String lastNumber = snapshot.getValue().toString();
                         final String ogrNumText = ogrNum.getText().toString().trim();
+                        final String ogrNameText = ogrName.getText().toString().trim();
                         addUserNum.setText(ogrNumText);
                         final User user = new User("", lastNumber, false, false);
                         final int acmNum = Integer.valueOf(lastNumber)+1;
@@ -67,6 +70,7 @@ public class AddUser extends AppCompatActivity {
                                     mDatabase.child("LastNumber").setValue(acmNum);
                                     addUserAcmNum.setText(String.valueOf(acmNum-1));
                                     mDatabase.child("AddedUsers").child(ogrNumText).setValue(user);
+                                    mDatabase.child("AddedUsers").child(ogrNumText).child("name").setValue(ogrNameText);
                                     Toast.makeText(AddUser.this, "Üye Başarıyla Eklendi", Toast.LENGTH_LONG).show();
                                 } else{
                                     Toast.makeText(AddUser.this, "Üye zaten ekli Acm numarası kısmına numarası yazıldı", Toast.LENGTH_LONG).show();

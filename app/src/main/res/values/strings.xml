@@ -153,6 +153,18 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="etkinlik_numaras">Etkinlik Numarası</string>
     <string name="etkinli_i_sil">Etkinliği Sil</string>
+    <string name="koordinat_rl_k_yeleri_listesi">Koordinatörlük Üyeleri Listesi</string>
+    <string name="qr_scanner">QR Scanner</string>
+    <string name="koordinat_rl_e_yerle_tir">Koordinatörlüğe Yerleştir</string>
+    <string name="ana_ekrana_git">Ana Ekrana Git</string>
+    <string name="etkinlik_sil">Etkinlik Sil</string>
+    <string name="etkinlik_ekle">Etkinlik Ekle</string>
+    <string name="yelerin_simlerini_ekle">Üyelerin İsimlerini Ekle</string>
+    <string name="isim_giriniz">isim giriniz</string>
+    <string name="numara_giriniz">numara giriniz</string>
+    <string name="smi_ekle">İsmi ekle</string>
+    <string name="sim_giriniz">İsim giriniz...</string>
+    <string name="ye_ekle">üye ekle</string>
 
     <!-- Coordinator Names -->
 

@@ -30,6 +30,8 @@ public class AdminPanel extends AppCompatActivity {
     Button select_coor;
     Button delEvent;
     Button qr_scanner;
+    Button koor_uyeleri_list;
+    Button add_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +93,17 @@ public class AdminPanel extends AppCompatActivity {
                 startActivity(new Intent(AdminPanel.this, QrScannerAdminActivity.class));
             }
         });
+
+        koor_uyeleri_list = (Button) findViewById(R.id.koor_uyeleri_list);
+
+        koor_uyeleri_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminPanel.this, KoorMemberListActivity.class));
+            }
+        });
+
+
 
     }
 }

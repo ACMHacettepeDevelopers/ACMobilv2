@@ -17,42 +17,49 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:text="Üye Ekle" />
+            android:text="@string/ye_ekle" />
 
         <Button
             android:id="@+id/addEventButton"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:text="Etkinlik Ekle" />
+            android:text="@string/etkinlik_ekle" />
 
         <Button
             android:id="@+id/deleteEventButton"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:text="Etkinlik Sil" />
+            android:text="@string/etkinlik_sil" />
 
         <Button
             android:id="@+id/home_screen"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:text="Ana Ekrana Git" />
+            android:text="@string/ana_ekrana_git" />
 
         <Button
             android:id="@+id/koor_sec"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:text="Koordinatörlüğe Yerleştir" />
+            android:text="@string/koordinat_rl_e_yerle_tir" />
 
         <Button
             android:id="@+id/qr_scan"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:text="QR Scanner" />
+            android:text="@string/qr_scanner" />
+        <Button
+            android:id="@+id/koor_uyeleri_list"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="@string/koordinat_rl_k_yeleri_listesi" />
+
 
     </LinearLayout>
 
