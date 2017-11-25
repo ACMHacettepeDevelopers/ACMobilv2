@@ -38,7 +38,7 @@ public class AdminPanel extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_panel);
 
-
+        // Just creating buttons and using them to start the desired activity.
         addUser = (Button) findViewById(R.id.uye_ekle_button);
 
         addUser.setOnClickListener(new View.OnClickListener() {

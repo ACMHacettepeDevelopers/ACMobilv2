@@ -85,6 +85,7 @@ public class SignupActivity extends AppCompatActivity {
                     Toast.makeText(SignupActivity.this, "Kullanıcı adı 3-32 karakter arasında olmalıdır", Toast.LENGTH_LONG).show();
                 }
                 else{
+                    // storing data in strings to write them to firebase later on.
                     final String email = inputEmail.getText().toString().trim();
                     final String password = inputPassword.getText().toString().trim();
                     final String password2 = inputPassword2.getText().toString().trim();
@@ -134,7 +135,7 @@ public class SignupActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<AuthResult> task) {
                                                 progressBar.setVisibility(View.GONE);
-
+                                                // Write the data to firebase.
                                                 mDatabase.child("AddedUsers/").child(ogrNum).child("isRegistered").setValue(true);
                                                 mDatabase.child("AddedUsers/").child(ogrNum).child("username").setValue(username);
                                                 mDatabase.child("RegisteredUsers").child(auth.getCurrentUser().getUid()).child("username").setValue(username);

@@ -27,6 +27,7 @@ import java.util.List;
 
 import static com.acmhacettepe.developers.acmobil.CommonMethods.getCurrentDate;
 
+// This activity for the users who didn't sign in.
 public class YemekActivity extends AppCompatActivity {
     ExpandableListView expandableListView;
     ExpListAdapterForFoodList listAdapter;

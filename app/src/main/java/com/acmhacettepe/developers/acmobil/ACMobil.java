@@ -17,6 +17,7 @@ public class ACMobil extends Application {
         super.onCreate();
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
+        // Builder for Picasso to have off-line image display.
         Picasso.Builder builder = new Picasso.Builder(this);
         builder.downloader(new OkHttpDownloader(this, Integer.MAX_VALUE));
         Picasso built = builder.build();

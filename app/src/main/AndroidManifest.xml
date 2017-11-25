@@ -90,6 +90,7 @@
         <activity android:name=".QrScannerActivity" />
         <activity android:name=".QrScannerAdminActivity" />
         <activity android:name=".KoorMemberList" />
+        <activity android:name=".KoorMemberListActivity" />
     </application>
 
 </manifest>

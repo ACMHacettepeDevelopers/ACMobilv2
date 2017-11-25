@@ -15,6 +15,7 @@ import java.util.List;
  * Created by Gokberk on 8/12/2017.
  */
 
+// Adapter for displaying foodlist in a date-food hiearchy.
 public class ExpListAdapterForFoodList extends BaseExpandableListAdapter {
     private Context _context;
     private List<String> _listDataHeader; // header titles

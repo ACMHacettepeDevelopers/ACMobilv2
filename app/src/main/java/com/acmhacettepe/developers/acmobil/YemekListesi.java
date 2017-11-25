@@ -59,6 +59,11 @@ public class YemekListesi extends Fragment  {
         return view;
     }
 
+    /* Setting up a asynchronous task to download the foodList xml. Then parsing it to use
+     * the necessary data. We're using a function called compareDatetoToday to eliminate the
+     * food lists of older days. OnPostExecute we set up the adapter with the lists which we
+     * populated with the foods and date.
+     */
     private class GetData extends AsyncTask<Void, Void, HashMap<String, List<String>> > {
 
         URL url;
