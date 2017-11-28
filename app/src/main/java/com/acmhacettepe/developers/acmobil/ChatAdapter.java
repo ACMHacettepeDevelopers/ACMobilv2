@@ -55,12 +55,12 @@ public class ChatAdapter extends BaseAdapter {
         userRoot.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Chats.nickname = ((String) (dataSnapshot).getValue());
+                Chats.nickname =  (dataSnapshot).getValue().toString();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Chats.nickname = ((String) (dataSnapshot).getValue());
+                Chats.nickname =  (dataSnapshot).getValue().toString();
             }
 
             @Override
