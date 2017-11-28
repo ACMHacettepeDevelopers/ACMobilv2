@@ -58,7 +58,8 @@ public class SelectCoordinator extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        HashMap<String, HashMap<String,String>> usersMap = ((HashMap<String,HashMap<String,String>>) dataSnapshot.getValue());
+                        HashMap<String, HashMap<String,String>> usersMap =
+                                ((HashMap<String,HashMap<String,String>>) dataSnapshot.getValue());
                         Iterator itrOuter = usersMap.values().iterator();
                         boolean found = false;
                         while(itrOuter.hasNext()) {
@@ -67,17 +68,20 @@ public class SelectCoordinator extends AppCompatActivity {
 
                             if(innerMap.values().contains(acmNum.getText().toString())) {
                                 innerMap.put("Koordinatorluk", select_coor.getSelectedItem().toString());
-                                Toast.makeText(SelectCoordinator.this,"Üye seçilen koordinatörlüğe başarıyla yerleştirildi.",Toast.LENGTH_LONG).show();
+                                Toast.makeText(SelectCoordinator.this,
+                                        "Üye seçilen koordinatörlüğe başarıyla yerleştirildi.",Toast.LENGTH_LONG).show();
                                 found = true;
                                 break;
                             }
                         }
-                        if(!found) Toast.makeText(SelectCoordinator.this,"Verilen Acm numarasında üye bulunamadı",Toast.LENGTH_LONG).show();
+                        if(!found) Toast.makeText(SelectCoordinator.this,
+                                "Verilen Acm numarasında üye bulunamadı",Toast.LENGTH_LONG).show();
                         regUsers.updateChildren((Map)usersMap);
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Toast.makeText(SelectCoordinator.this, "There was some error...", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SelectCoordinator.this,
+                                "There was some error...", Toast.LENGTH_LONG).show();
                     }
                 });
 
