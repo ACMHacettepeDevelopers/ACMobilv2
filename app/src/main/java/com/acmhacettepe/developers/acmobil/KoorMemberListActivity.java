@@ -24,6 +24,7 @@ public class KoorMemberListActivity extends AppCompatActivity {
     private Spinner mCoorSpinner;
     private ListView mNamesListView;
     private ArrayList<String> names = new ArrayList<>();
+    
 
 
     @Override
@@ -44,9 +45,8 @@ public class KoorMemberListActivity extends AppCompatActivity {
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mCoorSpinner.setAdapter(myAdapter);
 
-        final ArrayAdapter<String> nameAdapter = new ArrayAdapter<String>(KoorMemberListActivity.this,
-                android.R.layout.simple_list_item_1, names);
-        mNamesListView.setAdapter(nameAdapter);
+
+
 
         mCoorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -69,18 +69,14 @@ public class KoorMemberListActivity extends AppCompatActivity {
                                 if (innerMap.get("Koordinatorluk").equals(coor)) {
                                     if (innerMap.get("name") != null) {
                                         names.add(innerMap.get("name"));
-                                        nameAdapter.notifyDataSetChanged();
-                                        System.out.println("ADDED TO LIST");
-                                        for (String name: names) {
-                                            System.out.print(name + ", ");
-
-                                        }
-                                        System.out.print("\n");
                                     }
-
                                 }
                             }
                         }
+                        final ArrayAdapter<String> nameAdapter = new ArrayAdapter<String>(KoorMemberListActivity.this,
+                                android.R.layout.simple_list_item_1, names);
+                        mNamesListView.setAdapter(nameAdapter);
+                        System.out.println(nameAdapter.getContext());
                     }
 
                     @Override
@@ -90,14 +86,12 @@ public class KoorMemberListActivity extends AppCompatActivity {
 
                     }
                 });
-                System.out.println("DARARI DARARI DARARI DARARI DARARI");
-
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
+
     }
 }
