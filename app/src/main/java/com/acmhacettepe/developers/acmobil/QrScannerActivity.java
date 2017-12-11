@@ -140,7 +140,7 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
         //Handling the scan result.
 
         String scanResultTemp = result.getText(); // Getting the text of the QR code.
-        
+        // If scanResult contains url this will prevent database regex error.
         if (scanResultTemp.contains("http") || scanResultTemp.contains(".")) {
             scanResultTemp = "darari";
         }
@@ -170,6 +170,10 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
                                             Toast.makeText(QrScannerActivity.this,
                                                     "Etkinliğe katılımınız başarıyla kaydedildi!",
                                                     Toast.LENGTH_LONG).show();
+                                            String participantName = dataSnapshot.child("name")
+                                                    .getValue().toString();
+                                            //Add the user's name as child to event name.
+                                            qrRegEvents.child(scanResult).child(participantName).setValue("1");
 
                                             if (!dataSnapshot.hasChild("eventCount")) {
                                                 regdUser.child("eventCount").setValue(1);

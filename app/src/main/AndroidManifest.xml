@@ -91,6 +91,7 @@
         <activity android:name=".QrScannerAdminActivity" />
         <activity android:name=".KoorMemberList" />
         <activity android:name=".KoorMemberListActivity" />
+        <activity android:name=".DisplayEventParticipantsActivity"></activity>
     </application>
 
 </manifest>

@@ -60,6 +60,13 @@
             android:layout_weight="1"
             android:text="@string/koordinat_rl_k_yeleri_listesi" />
 
+        <Button
+            android:id="@+id/display_event_participants"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="@string/etkinlige_katilanlari_goster" />
+
 
     </LinearLayout>
 

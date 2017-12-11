@@ -121,6 +121,12 @@ public class QrScannerAdminActivity extends AppCompatActivity implements ZXingSc
         //Handling the scan result.
 
         final String scanResult = result.getText(); // Get text of the QR code.
+        // For now, admins cannot add QR codes that contains URLs.
+        if (scanResult.contains(".") || scanResult.contains("http")) {
+            Toast.makeText(this, "QR Code cannot contain URL!", Toast.LENGTH_LONG).show();
+            finish();
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(QrScannerAdminActivity.this);
         builder.setTitle(scanResult + "yeni etkinlik olarak ekle?");
 
