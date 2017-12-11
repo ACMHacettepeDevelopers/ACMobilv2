@@ -139,8 +139,13 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
     public void handleResult(Result result) {
         //Handling the scan result.
 
-        final String scanResult = result.getText(); // Getting the text of the QR code.
+        String scanResultTemp = result.getText(); // Getting the text of the QR code.
+        
+        if (scanResultTemp.contains("http") || scanResultTemp.contains(".")) {
+            scanResultTemp = "darari";
+        }
 
+        final String scanResult = scanResultTemp;
         // We first check the if such a event exists or not.
         qrRegEvents.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
