@@ -43,7 +43,7 @@ public class DisplayEventParticipantsActivity extends AppCompatActivity {
 
         // Reading database and extracting event names then adding it to eventNames arraylist.
         // Finally setting the spinner's adapter with this arraylist.
-        qrRegisteredEvents.addValueEventListener(new ValueEventListener() {
+        qrRegisteredEvents.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 HashMap<String, HashMap<String, String>> eventsMap =
