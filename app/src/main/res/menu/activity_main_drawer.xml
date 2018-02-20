@@ -26,6 +26,10 @@
                     android:title="Harita" />
 
                 <item
+                    android:id="@+id/nav_discount"
+                    android:icon="@android:drawable/btn_star_big_on"
+                    android:title="İndirimler" />
+                <item
                     android:id="@+id/qr_scanner_icon"
                     android:icon="@drawable/qr_scanner_black"
                     android:title="QR Tarama" />

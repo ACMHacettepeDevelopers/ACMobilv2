@@ -156,7 +156,7 @@ public class YemekListesi extends Fragment  {
                 map.get(key).add(item); //adds value to list
             }
         }
-        }
+    }
 
     // This method takes a date and returns true if date is after today or its today, returns false if not
     public boolean compareDatetoToday (String date) {
@@ -175,8 +175,7 @@ public class YemekListesi extends Fragment  {
         return false;
 
     }
-    }
-
+}
 
 
 
