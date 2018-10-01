@@ -38,6 +38,7 @@ public class AddUser extends AppCompatActivity {
         //Get Firebase database instance
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.keepSynced(true);
         ogrNum = (EditText) findViewById(R.id.ogrNumSignUp);
         ogrName = (EditText) findViewById(R.id.ogrName);
         addUserNum = (TextView) findViewById(R.id.addUserNumber);
@@ -45,6 +46,8 @@ public class AddUser extends AppCompatActivity {
 
         final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference lastNumber = database.child("LastNumber");
+        database.keepSynced(true);
+        lastNumber.keepSynced(true);
 
 
         button = (Button) findViewById(R.id.button2);
@@ -63,6 +66,8 @@ public class AddUser extends AppCompatActivity {
                         final int acmNum = Integer.valueOf(lastNumber)+1;
                         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
                         DatabaseReference users = database.child("AddedUsers");
+                        database.keepSynced(true);
+                        users.keepSynced(true);
                         users.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot snapshot) {
